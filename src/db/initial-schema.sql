@@ -51,7 +51,7 @@ CREATE TABLE userActivities (
   id varchar(36) DEFAULT UUID(),
   reqId varchar(36) NOT NULL,
   rowId varchar(36),
-  attributeName VARCHAR(100),
+  attributename VARCHAR(100) NOT NULL,
   oldValue VARCHAR(1000),
   newValue VARCHAR(1000),
   createdAt datetime not null default current_timestamp(),
@@ -101,8 +101,8 @@ CREATE TABLE transactionTypes (
 
 CREATE TABLE currencies (
   id varchar(36) DEFAULT UUID(),
-  name VARCHAR(100),
-  abbreviation VARCHAR(10),
+  name VARCHAR(100) NOT NULL,
+  abbreviation VARCHAR(10) NOT NULL,
   createdAt datetime not null default current_timestamp(),
   updatedAt datetime not null default current_timestamp() ON UPDATE current_timestamp(),
   deletedAt datetime default null,
@@ -111,11 +111,33 @@ CREATE TABLE currencies (
 
 CREATE TABLE stores (
   id varchar(36) DEFAULT UUID(),
-  name VARCHAR(100),
+  name VARCHAR(100) NOT NULL,
   createdAt datetime not null default current_timestamp(),
   updatedAt datetime not null default current_timestamp() ON UPDATE current_timestamp(),
   deletedAt datetime default null,
   PRIMARY KEY (id)
+);
+
+CREATE TABLE tables (
+  id varchar(36) DEFAULT UUID(),
+  name VARCHAR(100) NOT NULL,    
+  createdAt datetime not null default current_timestamp(),
+  updatedAt datetime not null default current_timestamp() ON UPDATE current_timestamp(),
+  deletedAt datetime default null,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE tablesUsersRoles (
+  id varchar(36) DEFAULT UUID(),
+  userId varchar(36) NOT NULL,
+  tableId varchar(36) NOT NULL,
+  roleId varchar(36) NOT NULL,
+  createdAt datetime not null default current_timestamp(),
+  updatedAt datetime not null default current_timestamp() ON UPDATE current_timestamp(),
+  deletedAt datetime default null,
+  PRIMARY KEY (id),
+  FOREIGN KEY (userId) REFERENCES users (id),
+  FOREIGN KEY (tableId) REFERENCES tables (id),
 );
 
 CREATE TABLE transactions (
@@ -141,7 +163,7 @@ CREATE TABLE transactions (
 
 CREATE TABLE tags (
   id varchar(36) DEFAULT UUID(),
-  name VARCHAR(100),
+  name VARCHAR(100) NOT NULL,
   createdAt datetime not null default current_timestamp(),
   updatedAt datetime not null default current_timestamp() ON UPDATE current_timestamp(),
   deletedAt datetime default null,
