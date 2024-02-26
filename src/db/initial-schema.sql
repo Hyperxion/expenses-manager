@@ -139,6 +139,27 @@ CREATE TABLE transactions (
   FOREIGN KEY (storeId) REFERENCES stores (id)
 );
 
+CREATE TABLE tags (
+  id varchar(36) DEFAULT UUID(),
+  name VARCHAR(100),
+  createdAt datetime not null default current_timestamp(),
+  updatedAt datetime not null default current_timestamp() ON UPDATE current_timestamp(),
+  deletedAt datetime default null,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE transactionsTags (
+  id varchar(36) DEFAULT UUID(),
+  transaction_id varchar(36),
+  tag_id varchar(36),
+  createdAt datetime not null default current_timestamp(),
+  updatedAt datetime not null default current_timestamp() ON UPDATE current_timestamp(),
+  deletedAt datetime default null,
+  PRIMARY KEY (id),
+  FOREIGN KEY (transaction_id) REFERENCES transactions (id),
+  FOREIGN KEY (tag_id) REFERENCES tags (id)
+  );
+
 CREATE TABLE userSettings (
   id varchar(50) not null,
   userId varchar(50) not null,
