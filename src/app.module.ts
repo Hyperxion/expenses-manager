@@ -5,7 +5,8 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSource } from './dataSource';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import databaseConfig from './config/database.config';
+import databaseConfig from './config/db/database.config';
+import { configValidationSchema } from './config/db/config.schema';
 
 @Module({
   imports: [
@@ -15,9 +16,9 @@ import databaseConfig from './config/database.config';
       inject: [ConfigService],
       useFactory: databaseConfig
     }),
-    ConfigModule.forRoot(/*{
-      load: [databaseConfig]
-    }*/),
+    ConfigModule.forRoot({
+      validationSchema: configValidationSchema,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
