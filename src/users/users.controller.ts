@@ -8,7 +8,7 @@ export class UsersController {
   @Get()
   async getUsers() {
       const users = await this.usersService.findAll();
-      console.log('users Are...');
+      
       return users;
   }
 }
