@@ -1,6 +1,6 @@
-import { DataSource, EntityRepository, Repository } from 'typeorm';
-import { User } from './user.entity';
 import { Injectable } from '@nestjs/common';
+import { DataSource, Repository } from 'typeorm';
+import { User } from './user.entity';
 
 @Injectable()
 export class UserRepository extends Repository<User> {
@@ -9,10 +9,11 @@ export class UserRepository extends Repository<User> {
   }
 
   async getUsers() {
-    const users = await this.dataSource.getRepository(User).createQueryBuilder("user")
-    .where("user.id = :id", { id: 'd2187ebb-c977-406a-9208-2e8ba672be50' })
-    .getOne();
-    
+    const users = await this.dataSource
+      .getRepository(User)
+      .createQueryBuilder('user')
+      .getMany();
+
     return users;
   }
 }
