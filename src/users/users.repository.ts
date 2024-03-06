@@ -5,9 +5,8 @@ import {
 } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { User } from './user.entity';
-import { RegisterUserDto } from 'src/auth/dto/registerUser.dto';
 import * as bcrypt from 'bcrypt';
-
+import { RegisterUserDto } from '../auth/dto/registerUser.dto';
 @Injectable()
 export class UsersRepository extends Repository<User> {
   constructor(private dataSource: DataSource) {
