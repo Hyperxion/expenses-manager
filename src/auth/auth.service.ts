@@ -1,14 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { UsersRepository } from '../users/users.repository';
-import { DeepPartial } from 'typeorm';
-import { User } from '../users/user.entity';
+import { RegisterUserDto } from './dto/registerUser.dto';
 
 @Injectable()
 export class AuthService {
   constructor(private usersRepository: UsersRepository) {}
 
-  async registerUser(registerUserDto: DeepPartial<User>) {
-    const user = await this.usersRepository.create(registerUserDto);
-    await this.usersRepository.save(user);
+  async registerUser(registerUserDto: RegisterUserDto) {
+    const user = await this.usersRepository.createUser(registerUserDto);
   }
 }
