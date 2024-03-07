@@ -10,4 +10,11 @@ export class AuthController {
   async registerUser(@Body() registerUserDto: RegisterUserDto): Promise<void> {
     const users = await this.authService.registerUser(registerUserDto);
   }
+
+  @Post('/login')
+  async loginUser(
+    @Body() authCredentialsDto: RegisterUserDto,
+  ): Promise<{ accessToken: string }> {
+    return this.authService.loginUser(authCredentialsDto);
+  }
 }
