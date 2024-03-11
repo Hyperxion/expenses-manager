@@ -8,7 +8,7 @@ import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtStrategy } from './jwt.strategy';
 import { UsersService } from '../users/users.service';
-import { RolesGuard } from './roles.guard';
+import { AuthGuard } from './auth.guard';
 
 @Module({
   imports: [
@@ -31,9 +31,9 @@ import { RolesGuard } from './roles.guard';
     UsersService,
     JwtStrategy,
     UsersRepository,
-    RolesGuard,
+    AuthGuard,
   ],
   controllers: [AuthController],
-  exports: [JwtStrategy, PassportModule, RolesGuard, ConfigModule],
+  exports: [JwtModule, JwtStrategy, PassportModule, AuthGuard, ConfigModule],
 })
 export class AuthModule {}
