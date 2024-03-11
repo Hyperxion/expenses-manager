@@ -13,7 +13,7 @@ export class AuthService {
   ) {}
 
   async registerUser(registerUserDto: RegisterUserDto) {
-    const user = await this.usersRepository.createUser(registerUserDto);
+    await this.usersRepository.createUser(registerUserDto);
   }
 
   async loginUser(

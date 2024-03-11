@@ -21,11 +21,5 @@ import { RolesGuard } from './auth/roles.guard';
     }),
     AuthModule,
   ],
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
-  ],
 })
 export class AppModule {}
