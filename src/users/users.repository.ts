@@ -7,10 +7,10 @@ import { DataSource, Repository } from 'typeorm';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
 import { RegisterUserDto } from '../auth/dto/registerUser.dto';
-import { UsersRepoI } from './usersRepoI';
+import { IUsersRepo } from './usersRepoI';
 
 @Injectable()
-export class UsersRepository extends Repository<User> implements UsersRepoI {
+export class UsersRepository extends Repository<User> implements IUsersRepo {
   constructor(private dataSource: DataSource) {
     super(User, dataSource.createEntityManager());
   }
@@ -33,9 +33,11 @@ export class UsersRepository extends Repository<User> implements UsersRepoI {
         throw new InternalServerErrorException();
       }
     }
+
+    return user.id;
   }
 
-  async getUsers() {
+  async getUsers(): Promise<User[]> {
     const users = await this.dataSource
       .getRepository(User)
       .createQueryBuilder('user')
