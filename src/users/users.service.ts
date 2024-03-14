@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { UsersRepository } from './users.repository';
-import { IUsersRepo } from './usersRepoI';
 @Injectable()
 export class UsersService {
-  constructor(private usersRepository: IUsersRepo) {}
+  constructor(private usersRepository: UsersRepository) {}
 
   async findAll() {
     const users = await this.usersRepository.getUsers();
