@@ -9,7 +9,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtStrategy } from './jwt.strategy';
 import { UsersService } from '../users/users.service';
 import { AuthGuard } from './auth.guard';
-import { JWT_SECRET } from '../config/constants';
 
 @Module({
   imports: [
@@ -19,7 +18,7 @@ import { JWT_SECRET } from '../config/constants';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        secret: configService.get(JWT_SECRET),
+        secret: configService.get('JWT_SECRET'),
         signOptions: {
           expiresIn: 3600,
         },

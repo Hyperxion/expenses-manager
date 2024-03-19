@@ -6,7 +6,6 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { JWT_SECRET } from '../config/constants';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -21,7 +20,7 @@ export class AuthGuard implements CanActivate {
     if (this.configService.get('ENABLE_AUTH') === 'true') isAuthEnabled = true;
     if (!isAuthEnabled) return true;
 
-    const secret = this.configService.get(JWT_SECRET);
+    const secret = this.configService.get('JWT_SECRET');
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
 
