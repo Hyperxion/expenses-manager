@@ -34,7 +34,7 @@ export class UsersRepository extends Repository<User> implements IUsersRepo {
       }
     }
 
-    return user.id;
+    return user.username;
   }
 
   async getUsers(): Promise<User[]> {

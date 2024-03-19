@@ -19,12 +19,11 @@ export class AuthGuard implements CanActivate {
     let isAuthEnabled = false;
 
     if (this.configService.get('ENABLE_AUTH') === 'true') isAuthEnabled = true;
+    if (!isAuthEnabled) return true;
 
-    const secret = this.configService.get('JWT_SECRET');
+    const secret = this.configService.get('JWT_SECRET_DEV');
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
-
-    if (!isAuthEnabled) return true;
 
     if (!token) {
       throw new UnauthorizedException();

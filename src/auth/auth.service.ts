@@ -1,26 +1,26 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { UsersRepository } from '../users/users.repository';
 import { RegisterUserDto } from './dto/registerUser.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtPayload } from './jwt-payload.interface';
 import { JwtService } from '@nestjs/jwt';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private usersRepository: UsersRepository,
+    private usersService: UsersService,
     private jwtService: JwtService,
   ) {}
 
   async registerUser(registerUserDto: RegisterUserDto) {
-    await this.usersRepository.createUser(registerUserDto);
+    return await this.usersService.createUser(registerUserDto);
   }
 
   async loginUser(
     registerUserDto: RegisterUserDto,
   ): Promise<{ accessToken: string }> {
     const { username, password } = registerUserDto;
-    const user = await this.usersRepository.findOne({ where: { username } });
+    const user = await this.usersService.findByUsername(username);
 
     if (user && (await bcrypt.compare(password, user.password))) {
       const payload: JwtPayload = { username };
