@@ -24,7 +24,6 @@ import { AuthGuard } from './auth.guard';
         },
       }),
     }),
-    TypeOrmModule.forFeature([UsersRepository]),
   ],
   providers: [AuthService, JwtStrategy, AuthGuard, UsersRepository],
   controllers: [AuthController],
