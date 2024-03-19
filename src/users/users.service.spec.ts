@@ -1,14 +1,9 @@
 import { UsersService } from './users.service';
-import { MockUserRepository } from './mockUserRepository';
 
 describe('UsersService', () => {
   let usersService: UsersService;
-  let mockUserRepository: MockUserRepository;
 
-  beforeEach(async () => {
-    mockUserRepository = new MockUserRepository();
-    usersService = new UsersService(mockUserRepository);
-  });
+  beforeEach(async () => {});
 
   describe('findAll', () => {
     it('finds all users', async () => {

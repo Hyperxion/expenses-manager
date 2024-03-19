@@ -7,10 +7,9 @@ import { DataSource, Repository } from 'typeorm';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
 import { RegisterUserDto } from '../auth/dto/registerUser.dto';
-import { IUsersRepo } from './usersRepoI';
 
 @Injectable()
-export class UsersRepository extends Repository<User> implements IUsersRepo {
+export class UsersRepository extends Repository<User> {
   constructor(private dataSource: DataSource) {
     super(User, dataSource.createEntityManager());
   }
