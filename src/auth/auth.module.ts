@@ -26,13 +26,7 @@ import { AuthGuard } from './auth.guard';
     }),
     TypeOrmModule.forFeature([UsersRepository]),
   ],
-  providers: [
-    AuthService,
-    UsersService,
-    JwtStrategy,
-    UsersRepository,
-    AuthGuard,
-  ],
+  providers: [AuthService, JwtStrategy, AuthGuard],
   controllers: [AuthController],
   exports: [JwtModule, JwtStrategy, PassportModule, AuthGuard, ConfigModule],
 })

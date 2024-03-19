@@ -14,6 +14,10 @@ export class UsersRepository extends Repository<User> {
     super(User, dataSource.createEntityManager());
   }
 
+  async findByUsername(username: string) {
+    return await this.findOne({ where: { username } });
+  }
+
   async createUser(registerUserDto: RegisterUserDto) {
     const { username, password } = registerUserDto;
 
