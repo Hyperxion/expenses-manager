@@ -8,6 +8,11 @@ describe('UsersService', () => {
   let usersService: UsersService;
   let mockUsersRepository: MockUsersRepository;
 
+  const mockUsers = [
+    { id: 1, name: 'John' },
+    { id: 2, name: 'Jane' },
+  ];
+
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       providers: [
@@ -20,16 +25,24 @@ describe('UsersService', () => {
     mockUsersRepository = moduleRef.get<MockUsersRepository>(UsersRepository);
   });
 
-  describe('findAll', () => {
-    it('should return users from repository', async () => {
-      const mockUsers = [
-        { id: 1, name: 'John' },
-        { id: 2, name: 'Jane' },
-      ];
-      mockUsersRepository.getUsers.mockResolvedValue(mockUsers);
-      const result = await usersService.findAll();
+  it('findAll users', async () => {
+    mockUsersRepository.getUsers.mockResolvedValue(mockUsers);
+    const result = await usersService.findAll();
 
-      expect(result).toEqual(mockUsers);
-    });
+    expect(result).toEqual(mockUsers);
+  });
+
+  it('findByUsername - finds user by username', async () => {
+    mockUsersRepository.getByUsername.mockResolvedValue(mockUsers[0]);
+    const user = await usersService.findByUsername(mockUsers[0].name);
+
+    expect(user).toEqual(mockUsers[0]);
+  });
+
+  it('findByUsername - does NOT find user', async () => {
+    mockUsersRepository.getByUsername.mockResolvedValue(null);
+    const user = await usersService.findByUsername('name');
+
+    expect(user).toBeNull();
   });
 });
