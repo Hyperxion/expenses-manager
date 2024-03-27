@@ -137,7 +137,7 @@ CREATE TABLE tablesUsersRoles (
   deletedAt datetime default null,
   PRIMARY KEY (id),
   FOREIGN KEY (userId) REFERENCES users (id),
-  FOREIGN KEY (tableId) REFERENCES tables (id),
+  FOREIGN KEY (tableId) REFERENCES tables (id)
 );
 
 CREATE TABLE transactions (
@@ -150,6 +150,7 @@ CREATE TABLE transactions (
   beneficaryId VARCHAR(36),
   currencyId VARCHAR(36),
   storeId VARCHAR(36),
+  userId VARCHAR(36),
   createdAt datetime not null default current_timestamp(),
   updatedAt datetime not null default current_timestamp() ON UPDATE current_timestamp(),
   deletedAt datetime default null,
@@ -158,7 +159,8 @@ CREATE TABLE transactions (
   FOREIGN KEY (categoryId) REFERENCES transactionCategories (id),
   FOREIGN KEY (currencyId) REFERENCES currencies (id),
   FOREIGN KEY (beneficaryId) REFERENCES beneficaries (id),
-  FOREIGN KEY (storeId) REFERENCES stores (id)
+  FOREIGN KEY (storeId) REFERENCES stores (id),
+  FOREIGN KEY (userId) REFERENCES users (id)
 );
 
 CREATE TABLE tags (
