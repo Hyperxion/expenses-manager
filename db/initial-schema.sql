@@ -73,21 +73,24 @@ CREATE TABLE roles (
 
 CREATE TABLE beneficaries (
   id varchar(36) DEFAULT UUID(),
-  firstName VARCHAR(255),
-  lastName VARCHAR(255),
+  name VARCHAR(255),
+  userId VARCHAR(36) NOT NULL,
   createdAt datetime not null default current_timestamp(),
   updatedAt datetime not null default current_timestamp() ON UPDATE current_timestamp(),
   deletedAt datetime default null,
   PRIMARY KEY (id)
+  FOREIGN KEY (userId) REFERENCES users (id)
 );
 
 CREATE TABLE transactionCategories (
   id varchar(36) DEFAULT UUID(),
   name VARCHAR(255),
+  userId VARCHAR(36) NOT NULL,
   createdAt datetime not null default current_timestamp(),
   updatedAt datetime not null default current_timestamp() ON UPDATE current_timestamp(),
   deletedAt datetime default null,
   PRIMARY KEY (id)
+  FOREIGN KEY (userId) REFERENCES users (id)
 );
 
 CREATE TABLE transactionTypes (
@@ -103,19 +106,24 @@ CREATE TABLE currencies (
   id varchar(36) DEFAULT UUID(),
   name VARCHAR(100) NOT NULL,
   abbreviation VARCHAR(10) NOT NULL,
+  userId VARCHAR(36) NOT NULL,
   createdAt datetime not null default current_timestamp(),
   updatedAt datetime not null default current_timestamp() ON UPDATE current_timestamp(),
   deletedAt datetime default null,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  FOREIGN KEY (userId) REFERENCES users (id)
+
 );
 
 CREATE TABLE stores (
   id varchar(36) DEFAULT UUID(),
   name VARCHAR(100) NOT NULL,
+  userId VARCHAR(36) NOT NULL,
   createdAt datetime not null default current_timestamp(),
   updatedAt datetime not null default current_timestamp() ON UPDATE current_timestamp(),
   deletedAt datetime default null,
   PRIMARY KEY (id)
+  FOREIGN KEY (userId) REFERENCES users (id)
 );
 
 CREATE TABLE tables (
@@ -166,10 +174,12 @@ CREATE TABLE transactions (
 CREATE TABLE tags (
   id varchar(36) DEFAULT UUID(),
   name VARCHAR(100) NOT NULL,
+  userId VARCHAR(36) NOT NULL,
   createdAt datetime not null default current_timestamp(),
   updatedAt datetime not null default current_timestamp() ON UPDATE current_timestamp(),
   deletedAt datetime default null,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  FOREIGN KEY (userId) REFERENCES users (id)
 );
 
 CREATE TABLE transactionsTags (
