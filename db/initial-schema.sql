@@ -159,6 +159,7 @@ CREATE TABLE transactions (
   currencyId VARCHAR(36),
   storeId VARCHAR(36),
   userId VARCHAR(36),
+  tableId VARCHAR(36),
   createdAt datetime not null default current_timestamp(),
   updatedAt datetime not null default current_timestamp() ON UPDATE current_timestamp(),
   deletedAt datetime default null,
@@ -168,7 +169,9 @@ CREATE TABLE transactions (
   FOREIGN KEY (currencyId) REFERENCES currencies (id),
   FOREIGN KEY (beneficaryId) REFERENCES beneficaries (id),
   FOREIGN KEY (storeId) REFERENCES stores (id),
-  FOREIGN KEY (userId) REFERENCES users (id)
+  FOREIGN KEY (userId) REFERENCES users (id),
+  FOREIGN KEY (tableId) REFERENCES tables (id)
+
 );
 
 CREATE TABLE tags (
