@@ -74,6 +74,8 @@ CREATE TABLE roles (
 CREATE TABLE beneficaries (
   id varchar(36) DEFAULT UUID(),
   name VARCHAR(255),
+  accountNumber VARCHAR(255),
+  iban VARCHAR(34),
   userId VARCHAR(36) NOT NULL,
   createdAt datetime not null default current_timestamp(),
   updatedAt datetime not null default current_timestamp() ON UPDATE current_timestamp(),
