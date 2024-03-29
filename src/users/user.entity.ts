@@ -22,8 +22,13 @@ export class User {
   @Column()
   password: string;
 
+  @ApiProperty({ required: false, nullable: true })
+  @Column({ nullable: true })
+  email: string;
+
   /**
    * The default constructor generates instance of a class with random property values.
+   *  Meant for creating testing data
    */
   constructor() {
     this.id = uuidv4();
