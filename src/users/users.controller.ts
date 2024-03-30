@@ -26,4 +26,9 @@ import { RegisterUserDto } from '../auth/dto/registerUser.dto';
 @Controller('users')
 export class UsersController implements CrudController<User> {
   constructor(public service: UsersService) {}
+
+  @Get('/all')
+  async getAll() {
+    return this.service.findAll();
+  }
 }

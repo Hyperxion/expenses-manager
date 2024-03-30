@@ -5,11 +5,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { UsersRepository } from './users.repository';
 import { AuthModule } from '../auth/auth.module';
+import { WinstonLogger } from 'nest-winston';
+import { LoggerService } from '../logger/logger.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), AuthModule],
+  imports: [TypeOrmModule.forFeature([User]), AuthModule, WinstonLogger],
   controllers: [UsersController],
-  providers: [UsersService, UsersRepository],
+  providers: [UsersService, UsersRepository, LoggerService],
   exports: [UsersService],
 })
 export class UsersModule {}
