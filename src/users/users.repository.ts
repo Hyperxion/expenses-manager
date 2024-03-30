@@ -4,9 +4,9 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { User } from './user.entity';
-import * as bcrypt from 'bcrypt';
+import { User } from './entities/user.entity';
 import { RegisterUserDto } from '../auth/dto/registerUser.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersRepository extends Repository<User> {

@@ -1,5 +1,12 @@
-import { NestFactory } from '@nestjs/core';
+import { CrudConfigService } from '@dataui/crud';
+CrudConfigService.load({
+  auth: {
+    property: 'userId',
+  },
+});
+
 import { AppModule } from './app.module';
+import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';

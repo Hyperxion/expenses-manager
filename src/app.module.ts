@@ -7,6 +7,7 @@ import { configValidationSchema } from './config/config.schema';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
+import { TransactionTypesModule } from './transaction-types/transaction-types.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AuthGuard } from './auth/auth.guard';
       validationSchema: configValidationSchema,
     }),
     AuthModule,
+    TransactionTypesModule,
   ],
 })
 export class AppModule {}
