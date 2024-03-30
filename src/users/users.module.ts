@@ -9,9 +9,9 @@ import { WinstonLogger } from 'nest-winston';
 import { LoggerService } from '../logger/logger.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), AuthModule, WinstonLogger],
+  imports: [TypeOrmModule.forFeature([User]), AuthModule],
   controllers: [UsersController],
-  providers: [UsersService, UsersRepository, LoggerService],
+  providers: [UsersService, UsersRepository],
   exports: [UsersService],
 })
 export class UsersModule {}

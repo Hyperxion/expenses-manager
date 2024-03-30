@@ -24,13 +24,7 @@ import { LoggerService } from '../logger/logger.service';
       }),
     }),
   ],
-  providers: [
-    AuthService,
-    JwtStrategy,
-    AuthGuard,
-    UsersRepository,
-    LoggerService,
-  ],
+  providers: [AuthService, JwtStrategy, AuthGuard, UsersRepository],
   controllers: [AuthController],
   exports: [JwtModule, JwtStrategy, PassportModule, AuthGuard, ConfigModule],
 })
