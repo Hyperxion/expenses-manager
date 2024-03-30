@@ -23,9 +23,6 @@
     "migration:run": "npm run build && npm run typeorm migration:run"
   },
   "dependencies": {
-    "@dataui/crud": "^5.3.3",
-    "@dataui/crud-request": "^5.3.3",
-    "@dataui/crud-typeorm": "^5.3.3",
     "@golevelup/ts-jest": "^0.4.0",
     "@hapi/joi": "^17.1.1",
     "@nestjs/common": "^10.0.0",

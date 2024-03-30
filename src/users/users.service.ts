@@ -1,26 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { UsersRepository } from './users.repository';
 import { RegisterUserDto } from 'src/auth/dto/registerUser.dto';
-import { TypeOrmCrudService } from '@dataui/crud-typeorm';
-import { User } from './entities/user.entity';
 import { LoggerService } from '../logger/logger.service';
 
 @Injectable()
-export class UsersService extends TypeOrmCrudService<User> {
+export class UsersService {
   constructor(
     private loggerService: LoggerService,
     private usersRepository: UsersRepository,
-  ) {
-    super(usersRepository);
-  }
+  ) {}
 
   async findAll() {
-    this.loggerService.log('this is log', UsersService.name);
-    this.loggerService.error(
-      'this is error log',
-      'stacktrace',
-      UsersService.name,
-    );
     const users = await this.usersRepository.getUsers();
 
     return users;

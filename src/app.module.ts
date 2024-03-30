@@ -13,6 +13,7 @@ import winston from 'winston';
 
 @Module({
   imports: [
+    LoggerModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -21,11 +22,9 @@ import winston from 'winston';
     ConfigModule.forRoot({
       validationSchema: configValidationSchema,
     }),
-    LoggerModule,
     AuthModule,
     UsersModule,
     TransactionTypesModule,
-    LoggerModule,
   ],
   providers: [LoggerService],
 })
