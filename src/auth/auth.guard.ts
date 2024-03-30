@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate {
     if (!token) {
       this.logger.error(
         `Unauthorized attempt to access ${handlerClass.name}.${handler.name}()`,
-        'error',
+        'missing token',
         AuthGuard.name,
       );
       throw new UnauthorizedException();
@@ -43,6 +43,11 @@ export class AuthGuard implements CanActivate {
       });
 
       request.userId = decoded.id;
+      this.logger.log(
+        `Calling ${handlerClass.name}.${handler.name}()`,
+        AuthGuard.name,
+        decoded.id,
+      );
     } catch {
       this.logger.error(
         `Unauthorized attempt to access ${handlerClass.name}.${handler.name}()`,

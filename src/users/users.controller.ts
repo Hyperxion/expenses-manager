@@ -10,18 +10,20 @@ import { GetUserId } from '../auth/getUserId.decorator';
 @Controller('users')
 export class UsersController {
   constructor(
-    private readonly loggerService: LoggerService,
+    private readonly logger: LoggerService,
     private readonly usersService: UsersService,
   ) {}
 
   @Get('/')
-  async getAll(@GetUserId() userId: string, @Req() req) {
+  async getAll() {
     try {
-      this.loggerService.log(
-        `called getAll() by user ${userId}`,
-        UsersController.name,
-      );
       return this.usersService.findAll();
-    } catch (error) {}
+    } catch (error) {
+      this.logger.error(
+        'Error occured',
+        error,
+        `${UsersController.name}.getAll()`,
+      );
+    }
   }
 }

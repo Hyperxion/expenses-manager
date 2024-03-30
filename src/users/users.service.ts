@@ -11,7 +11,6 @@ export class UsersService {
   ) {}
 
   async findAll() {
-    this.loggerService.log('Called findAll()', UsersService.name);
     const users = await this.usersRepository.getUsers();
 
     return users;
