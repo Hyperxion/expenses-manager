@@ -10,6 +10,7 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -25,6 +26,8 @@ async function bootstrap() {
   SwaggerModule.setup('/swagger', app, document);
 
   app.useGlobalPipes(new ValidationPipe());
+  //app.useLogger(app.get(WINSTON_MODULE_PROVIDER));
+
   const port: number | null = +process.env.APP_PORT!;
   await app.listen(port);
   console.log(`Application listening on port ${port}`);

@@ -5,13 +5,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import databaseConfig from './config/database.config';
 import { configValidationSchema } from './config/config.schema';
 import { AuthModule } from './auth/auth.module';
-import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from './auth/auth.guard';
 import { TransactionTypesModule } from './transaction-types/transaction-types.module';
+import { WinstonModule } from 'nest-winston';
+import { LoggerService } from './logger/logger.service';
+import { LoggerModule } from './logger/logger.module';
+import winston from 'winston';
 
 @Module({
   imports: [
-    UsersModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -20,8 +21,12 @@ import { TransactionTypesModule } from './transaction-types/transaction-types.mo
     ConfigModule.forRoot({
       validationSchema: configValidationSchema,
     }),
+    LoggerModule,
     AuthModule,
+    UsersModule,
     TransactionTypesModule,
+    LoggerModule,
   ],
+  providers: [LoggerService],
 })
 export class AppModule {}
