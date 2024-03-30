@@ -1,20 +1,27 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BIG_RANGE } from '../test-utils/test.constants';
-import { UsersMetadata } from '../test-utils/testMetadata';
+import { BIG_RANGE } from '../../test-utils/test.constants';
+import { UsersMetadata } from '../../test-utils/testMetadata';
 import {
   getRandomValueFromArray,
   randomNumber,
-} from '../test-utils/util-functions';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+} from '../../test-utils/util-functions';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
+import { CrudValidationGroups } from '@dataui/crud';
+import { IsNotEmpty, IsOptional } from 'class-validator';
+
+const { CREATE, UPDATE } = CrudValidationGroups;
 
 @Entity()
 export class User {
-  @ApiProperty()
+  @ApiProperty({ required: false })
+  @IsNotEmpty({ groups: [UPDATE] })
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @ApiProperty()
+  @IsOptional({ groups: [UPDATE] })
+  @IsNotEmpty({ groups: [CREATE] })
   @Column({ unique: true })
   username: string;
 

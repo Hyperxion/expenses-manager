@@ -1,7 +1,7 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { TransactionTypesService } from './transaction-types.service';
 import { TransactionType } from './entities/transaction-type.entity';
-import { Crud, CrudController } from '@dataui/crud';
+import { Crud, CrudAuth, CrudController } from '@dataui/crud';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '../auth/auth.guard';
 
@@ -10,7 +10,7 @@ import { AuthGuard } from '../auth/auth.guard';
     type: TransactionType,
   },
   routes: {
-    only: ['getManyBase'],
+    only: ['getManyBase', 'getOneBase'],
   },
   params: {
     id: {
@@ -20,6 +20,12 @@ import { AuthGuard } from '../auth/auth.guard';
     },
   },
 })
+// Uncomment this to automatically filter data based on userId
+// @CrudAuth({
+//   filter: (userId: string) => ({
+//     id: userId,
+//   }),
+// })
 @ApiTags('transaction-types')
 @UseGuards(AuthGuard)
 @Controller('transaction-types')
