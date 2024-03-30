@@ -1,7 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsNotEmpty,
-  IsOptional,
   IsString,
   IsUUID,
   Matches,
@@ -10,9 +8,6 @@ import {
 } from 'class-validator';
 
 export class RegisterUserDto {
-  @IsUUID()
-  id: string;
-
   @ApiProperty({ required: false })
   @IsString()
   @MinLength(4)
