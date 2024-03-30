@@ -28,6 +28,9 @@ export class AuthGuard implements CanActivate {
     const handler = context.getHandler();
     const handlerClass = context.getClass();
 
+    // Login and register routes should be unprotected
+    if (handlerClass.name === 'AuthController') return true;
+
     if (!token) {
       this.logger.error(
         `Unauthorized attempt to access ${handlerClass.name}.${handler.name}()`,
