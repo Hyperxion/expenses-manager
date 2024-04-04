@@ -15,7 +15,7 @@ export class UsersController {
   ) {}
 
   @Get('/')
-  async getAll() {
+  async getAll(@GetUserId() userId: string) {
     try {
       return this.usersService.findAll();
     } catch (error) {
@@ -23,6 +23,7 @@ export class UsersController {
         'Error occured',
         error,
         `${UsersController.name}.getAll()`,
+        userId,
       );
     }
   }

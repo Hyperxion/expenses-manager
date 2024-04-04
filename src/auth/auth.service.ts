@@ -32,6 +32,7 @@ export class AuthService {
       this.logger.log(
         `Successful login: ${username}`,
         `${AuthService.name}.${this.loginUser.name}()`,
+        user.id,
       );
 
       return { accessToken };
@@ -39,6 +40,7 @@ export class AuthService {
       this.logger.warn(
         `Failed login: ${username}`,
         `${AuthService.name}.${this.loginUser.name}()`,
+        undefined,
       );
 
       throw new UnauthorizedException('Please check your login credentials');

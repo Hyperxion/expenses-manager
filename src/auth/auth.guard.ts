@@ -36,6 +36,7 @@ export class AuthGuard implements CanActivate {
         `Unauthorized attempt to access ${handlerClass.name}.${handler.name}()`,
         'missing token',
         AuthGuard.name,
+        undefined,
       );
       throw new UnauthorizedException();
     }
@@ -56,6 +57,7 @@ export class AuthGuard implements CanActivate {
         `Unauthorized attempt to access ${handlerClass.name}.${handler.name}()`,
         'error',
         AuthGuard.name,
+        undefined,
       );
       throw new UnauthorizedException();
     }
