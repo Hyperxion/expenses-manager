@@ -6,6 +6,7 @@ import {
 import { Repository, DataSource } from 'typeorm';
 import { CreateTableDto } from './dto/create-table.dto';
 import { Table } from './entities/table.entity';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class TablesRepository extends Repository<Table> {
@@ -13,9 +14,14 @@ export class TablesRepository extends Repository<Table> {
     super(Table, dataSource.createEntityManager());
   }
 
-  async createUser(createTableDto: CreateTableDto) {
+  async createTable(createTableDto: CreateTableDto) {
     try {
-      const table = await this.create(createTableDto);
+      const table = this.create(createTableDto);
+      const user = new User();
+      user.id = createTableDto.userId;
+
+      table.user = user;
+
       await this.save(table);
 
       return table;
@@ -29,13 +35,14 @@ export class TablesRepository extends Repository<Table> {
     }
   }
 
-  async getTables(): Promise<Table[]> {
-    const users = await this.dataSource
-      .getRepository(Table)
-      .createQueryBuilder('table')
-      .getMany();
+  async getUserTables(userId: string) {
+    return await this.find({ where: { user: { id: userId } } });
+  }
 
-    return users;
+  async getTables(): Promise<Table[]> {
+    const tables = await this.find();
+
+    return tables;
   }
 
   async getByName(name: string): Promise<Table | null> {

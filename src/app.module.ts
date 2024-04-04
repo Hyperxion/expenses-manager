@@ -6,12 +6,10 @@ import databaseConfig from './config/database.config';
 import { configValidationSchema } from './config/config.schema';
 import { AuthModule } from './auth/auth.module';
 import { TransactionTypesModule } from './transaction-types/transaction-types.module';
-import { WinstonModule } from 'nest-winston';
 import { LoggerService } from './logger/logger.service';
 import { LoggerModule } from './logger/logger.module';
 import { RolesModule } from './roles/roles.module';
 import { TablesModule } from './tables/tables.module';
-import winston from 'winston';
 
 @Module({
   imports: [

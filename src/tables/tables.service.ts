@@ -7,17 +7,21 @@ import { TablesRepository } from './tables.repository';
 export class TablesService {
   constructor(
     //private loggerService: LoggerService,
-    private tablessRepository: TablesRepository,
+    private tablesRepository: TablesRepository,
   ) {}
 
   async create(createTableDto: CreateTableDto) {
-    const newTable = await this.tablessRepository.createUser(createTableDto);
+    const newTable = await this.tablesRepository.createTable(createTableDto);
 
     return newTable;
   }
 
-  findAll() {
-    return `This action returns all tables`;
+  async getUserTables(userId: string) {
+    return await this.tablesRepository.getUserTables(userId);
+  }
+
+  async findAll() {
+    return await this.tablesRepository.find();
   }
 
   findOne(id: number) {

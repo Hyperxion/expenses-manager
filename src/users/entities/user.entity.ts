@@ -31,27 +31,35 @@ export class User {
   @Column({ nullable: true })
   email: string;
 
-  // @OneToMany(() => Table, (table) => table.user)
-  // tables: Relation<Table>[];
+  @OneToMany(() => Table, (table) => table.user)
+  tables: Relation<Table>[];
 
   @CreateDateColumn()
-  createdAt: Date = new Date();
+  createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
 
   @DeleteDateColumn()
   deletedAt: Date;
+
+  constructor() {}
+
   /**
-   * The default constructor generates instance of a class with random property values.
+   *  Generates instance of a class with random property values.
    *  Meant for creating testing data
+   *
+   *  TODO: Implement builder pattern
    */
-  constructor() {
-    this.id = uuidv4();
-    this.username =
+  public static generateTestInstance() {
+    const user = new User();
+    user.id = uuidv4();
+    user.username =
       getRandomValueFromArray(UsersMetadata.NAMES) + randomNumber(BIG_RANGE);
-    this.password =
+    user.password =
       getRandomValueFromArray(UsersMetadata.SURENAMES) +
       randomNumber(BIG_RANGE);
+
+    return user;
   }
 }

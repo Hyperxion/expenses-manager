@@ -18,7 +18,7 @@ export class TransactionType {
   type: string;
 
   @CreateDateColumn()
-  createdAt: Date = new Date();
+  createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;

@@ -24,11 +24,11 @@ export class Table {
   @Column({ nullable: true })
   description: string;
 
-  //   @ManyToOne(() => User, (user) => user.tables)
-  //   user: Relation<User>;
+  @ManyToOne(() => User, (user) => user.tables)
+  user: Relation<User>;
 
   @CreateDateColumn()
-  createdAt: Date = new Date();
+  createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;

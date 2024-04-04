@@ -13,6 +13,7 @@ import { CreateTableDto } from './dto/create-table.dto';
 import { UpdateTableDto } from './dto/update-table.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '../auth/auth.guard';
+import { GetUserId } from '../auth/getUserId.decorator';
 
 @ApiTags('tables')
 @UseGuards(AuthGuard)
@@ -20,14 +21,20 @@ import { AuthGuard } from '../auth/auth.guard';
 export class TablesController {
   constructor(private readonly tablesService: TablesService) {}
 
-  @Post('/')
-  create(@Body() createTableDto: CreateTableDto) {
+  @Post()
+  create(@Body() createTableDto: CreateTableDto, @GetUserId() userId: string) {
+    createTableDto.userId = userId;
     return this.tablesService.create(createTableDto);
   }
 
   @Get()
-  findAll() {
-    return this.tablesService.findAll();
+  /**
+   * Get tables of currently logged in user.
+   *
+   * For getting tables of any user, see UsersController.getUserTables
+   */
+  findAll(@GetUserId() userId: string) {
+    return this.tablesService.getUserTables(userId);
   }
 
   @Get(':id')

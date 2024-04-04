@@ -37,12 +37,12 @@ export class UsersRepository extends Repository<User> {
   }
 
   async getUsers(): Promise<User[]> {
-    const users = await this.dataSource
-      .getRepository(User)
-      .createQueryBuilder('user')
-      .getMany();
+    // const users = await this.dataSource
+    //   .getRepository(User)
+    //   .createQueryBuilder('user')
+    //   .getMany();
 
-    return users;
+    return this.find();
   }
 
   async getByUsername(username: string): Promise<User | null> {
