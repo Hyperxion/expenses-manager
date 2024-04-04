@@ -1,3 +1,4 @@
+import { Table } from '../../tables/entities/table.entity';
 import { BIG_RANGE } from '../../test-utils/test.constants';
 import { UsersMetadata } from '../../test-utils/testMetadata';
 import {
@@ -9,7 +10,9 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
+  Relation,
   UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
@@ -27,6 +30,9 @@ export class User {
 
   @Column({ nullable: true })
   email: string;
+
+  // @OneToMany(() => Table, (table) => table.user)
+  // tables: Relation<Table>[];
 
   @CreateDateColumn()
   createdAt: Date = new Date();
