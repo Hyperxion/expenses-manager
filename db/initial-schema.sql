@@ -130,7 +130,8 @@ CREATE TABLE stores (
 
 CREATE TABLE tables (
   id varchar(36) DEFAULT UUID(),
-  name VARCHAR(100) NOT NULL,    
+  name VARCHAR(100) NOT NULL,
+  description VARCHAR(200),     
   createdAt datetime not null default current_timestamp(),
   updatedAt datetime not null default current_timestamp() ON UPDATE current_timestamp(),
   deletedAt datetime default null,

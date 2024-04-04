@@ -4,7 +4,14 @@ import {
   getRandomValueFromArray,
   randomNumber,
 } from '../../test-utils/util-functions';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
 @Entity()
@@ -21,6 +28,14 @@ export class User {
   @Column({ nullable: true })
   email: string;
 
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt: Date;
   /**
    * The default constructor generates instance of a class with random property values.
    *  Meant for creating testing data
