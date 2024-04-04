@@ -29,7 +29,7 @@ export class User {
   email: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt: Date = new Date();
 
   @UpdateDateColumn()
   updatedAt: Date;
