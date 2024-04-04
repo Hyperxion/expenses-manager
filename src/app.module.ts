@@ -9,6 +9,7 @@ import { TransactionTypesModule } from './transaction-types/transaction-types.mo
 import { WinstonModule } from 'nest-winston';
 import { LoggerService } from './logger/logger.service';
 import { LoggerModule } from './logger/logger.module';
+import { RolesModule } from './roles/roles.module';
 import winston from 'winston';
 
 @Module({
@@ -25,6 +26,7 @@ import winston from 'winston';
     AuthModule,
     UsersModule,
     TransactionTypesModule,
+    RolesModule,
   ],
   providers: [LoggerService],
 })
