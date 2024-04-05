@@ -1,12 +1,13 @@
-import { Injectable, LoggerService } from '@nestjs/common';
-import { CreateTableDto } from './dto/create-table.dto';
+import { Injectable } from '@nestjs/common';
 import { UpdateTableDto } from './dto/update-table.dto';
 import { TablesRepository } from './tables.repository';
+import { LoggerService } from '../logger/logger.service';
+import { CreateTableDto } from './dto/create-table.dto';
 
 @Injectable()
 export class TablesService {
   constructor(
-    //private loggerService: LoggerService,
+    private loggerService: LoggerService,
     private tablesRepository: TablesRepository,
   ) {}
 
@@ -24,12 +25,16 @@ export class TablesService {
     return await this.tablesRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} table`;
+  async findOne(id: string, userId: string) {
+    return await this.tablesRepository.getUserTable(id, userId);
   }
 
-  update(id: number, updateTableDto: UpdateTableDto) {
-    return `This action updates a #${id} table`;
+  async update(id: string, userId: string, updateTableDto: UpdateTableDto) {
+    return await this.tablesRepository.updateUserTable(
+      id,
+      userId,
+      updateTableDto,
+    );
   }
 
   remove(id: number) {
