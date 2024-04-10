@@ -1,3 +1,4 @@
+import { Table } from '../../tables/entities/table.entity';
 import { BIG_RANGE } from '../../test-utils/test.constants';
 import { UsersMetadata } from '../../test-utils/testMetadata';
 import {
@@ -9,7 +10,9 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
+  Relation,
   UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
@@ -28,24 +31,35 @@ export class User {
   @Column({ nullable: true })
   email: string;
 
+  @OneToMany(() => Table, (table) => table.user)
+  tables: Relation<Table>[];
+
   @CreateDateColumn()
-  createdAt: Date = new Date();
+  createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
 
   @DeleteDateColumn()
   deletedAt: Date;
+
+  constructor() {}
+
   /**
-   * The default constructor generates instance of a class with random property values.
+   *  Generates instance of a class with random property values.
    *  Meant for creating testing data
+   *
+   *  TODO: Implement builder pattern
    */
-  constructor() {
-    this.id = uuidv4();
-    this.username =
+  public static generateTestInstance() {
+    const user = new User();
+    user.id = uuidv4();
+    user.username =
       getRandomValueFromArray(UsersMetadata.NAMES) + randomNumber(BIG_RANGE);
-    this.password =
+    user.password =
       getRandomValueFromArray(UsersMetadata.SURENAMES) +
       randomNumber(BIG_RANGE);
+
+    return user;
   }
 }

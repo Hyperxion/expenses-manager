@@ -22,7 +22,7 @@ export class Role {
   description: string;
 
   @CreateDateColumn()
-  createdAt: Date = new Date();
+  createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;

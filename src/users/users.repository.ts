@@ -20,7 +20,7 @@ export class UsersRepository extends Repository<User> {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const user = this.create({ username, password: hashedPassword });
+    const user = await this.create({ username, password: hashedPassword });
 
     try {
       await this.save(user);
@@ -37,12 +37,12 @@ export class UsersRepository extends Repository<User> {
   }
 
   async getUsers(): Promise<User[]> {
-    const users = await this.dataSource
-      .getRepository(User)
-      .createQueryBuilder('user')
-      .getMany();
+    // const users = await this.dataSource
+    //   .getRepository(User)
+    //   .createQueryBuilder('user')
+    //   .getMany();
 
-    return users;
+    return this.find();
   }
 
   async getByUsername(username: string): Promise<User | null> {

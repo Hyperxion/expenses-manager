@@ -5,8 +5,13 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  ManyToOne,
+  Relation,
+  Entity,
 } from 'typeorm';
+import { User } from '../../users/entities/user.entity';
 
+@Entity()
 export class Table {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -19,8 +24,11 @@ export class Table {
   @Column({ nullable: true })
   description: string;
 
+  @ManyToOne(() => User, (user) => user.tables)
+  user: Relation<User>;
+
   @CreateDateColumn()
-  createdAt: Date = new Date();
+  createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
