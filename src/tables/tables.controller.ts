@@ -63,7 +63,7 @@ export class TablesController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
-    return await this.tablesService.remove(+id);
+  async remove(@Param('id') id: string, @GetUserId() userId: string) {
+    return await this.tablesService.remove(id, userId);
   }
 }

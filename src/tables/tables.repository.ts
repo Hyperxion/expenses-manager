@@ -86,4 +86,11 @@ export class TablesRepository extends Repository<Table> {
   async getByName(name: string): Promise<Table | null> {
     return await this.findOne({ where: { name: name } });
   }
+
+  async removeTable(id: string, userId: string) {
+    const table = await this.getUserTable(id, userId);
+    if (!table) return null;
+
+    return await this.remove(table);
+  }
 }

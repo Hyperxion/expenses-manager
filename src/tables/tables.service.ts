@@ -37,7 +37,7 @@ export class TablesService {
     );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} table`;
+  async remove(id: string, userId: string) {
+    return await this.tablesRepository.removeTable(id, userId);
   }
 }
