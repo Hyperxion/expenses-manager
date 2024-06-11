@@ -1,3 +1,4 @@
+INSERT INTO tags
 ('5d22ddf9-5e7a-4498-8033-9fffb72d4808','3dtlac','e66562a4-dcd9-498e-8977-414349a0df65', NOW(), NOW(), NULL),
 ('60b94b93-f774-4a8d-b99b-9935fdfd894a','airsoft','e66562a4-dcd9-498e-8977-414349a0df65', NOW(), NOW(), NULL),
 ('c2c6bab1-8284-461f-9a22-371983c9020f','alibaba','e66562a4-dcd9-498e-8977-414349a0df65', NOW(), NOW(), NULL),

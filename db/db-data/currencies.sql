@@ -1,0 +1,2 @@
+INSERT INTO currencies
+('2be1868f-b62e-43e6-9a1c-850261846e20','Euro','EUR','e66562a4-dcd9-498e-8977-414349a0df65',NOW(),NOW(),NULL);
