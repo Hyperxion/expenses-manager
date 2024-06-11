@@ -22,7 +22,7 @@ export class TablesService {
   }
 
   async findAll() {
-    return await this.tablesRepository.find();
+    return await this.tablesRepository.findAllGeneric();
   }
 
   async findOne(id: string, userId: string) {

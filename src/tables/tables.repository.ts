@@ -3,16 +3,17 @@ import {
   ConflictException,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { Repository, DataSource } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { Table } from './entities/table.entity';
 import { User } from '../users/entities/user.entity';
 import { CreateTableDto } from './dto/create-table.dto';
 import { UpdateTableDto } from './dto/update-table.dto';
+import { BaseRepository } from '../GenericRepository';
 
 @Injectable()
-export class TablesRepository extends Repository<Table> {
-  constructor(private dataSource: DataSource) {
-    super(Table, dataSource.createEntityManager());
+export class TablesRepository extends BaseRepository<Table> {
+  constructor(dataSource: DataSource) {
+    super(Table, dataSource);
   }
 
   async createTable(createTableDto: CreateTableDto) {
@@ -49,18 +50,16 @@ export class TablesRepository extends Repository<Table> {
    * @returns table with ID that belongs to user with userId
    */
   async getUserTable(id: string, userId: string) {
-    return await this.findOne({
-      where: {
-        id: id,
-        user: { id: userId },
-      },
-    });
+    const where = {
+      id: id,
+      user: { id: userId },
+    };
+
+    return this.findById(where);
   }
 
   async getTables(): Promise<Table[]> {
-    const tables = await this.find();
-
-    return tables;
+    return this.findAll();
   }
 
   /**
