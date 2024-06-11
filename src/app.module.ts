@@ -10,6 +10,7 @@ import { LoggerService } from './logger/logger.service';
 import { LoggerModule } from './logger/logger.module';
 import { RolesModule } from './roles/roles.module';
 import { TablesModule } from './tables/tables.module';
+import { TagsModule } from './tags/tags.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { TablesModule } from './tables/tables.module';
     TransactionTypesModule,
     RolesModule,
     TablesModule,
+    TagsModule,
   ],
   providers: [LoggerService],
 })
