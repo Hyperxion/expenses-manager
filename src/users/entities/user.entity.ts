@@ -1,4 +1,5 @@
 import { Table } from '../../tables/entities/table.entity';
+import { Tag } from '../../tags/entities/tag.entity';
 import { BIG_RANGE } from '../../test-utils/test.constants';
 import { UsersMetadata } from '../../test-utils/testMetadata';
 import {
@@ -33,6 +34,9 @@ export class User {
 
   @OneToMany(() => Table, (table) => table.user)
   tables: Relation<Table>[];
+
+  @OneToMany(() => Tag, (tag) => tag.user)
+  tags: Relation<Table>[];
 
   @CreateDateColumn()
   createdAt: Date;

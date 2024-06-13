@@ -1,14 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { TagsService } from './tags.service';
 import { CreateTagDto } from './dto/create-tag.dto';
 import { UpdateTagDto } from './dto/update-tag.dto';
+import { GetUserId } from '../auth/getUserId.decorator';
+import { AuthGuard } from '../auth/auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('tags')
+@UseGuards(AuthGuard)
 @Controller('tags')
 export class TagsController {
   constructor(private readonly tagsService: TagsService) {}
 
   @Post()
-  create(@Body() createTagDto: CreateTagDto) {
+  create(@Body() createTagDto: CreateTagDto, @GetUserId() userId: string) {
+    console.log(`-----> userId is: ${JSON.stringify(userId, null, 2)}`);
+    createTagDto.userId = userId;
     return this.tagsService.create(createTagDto);
   }
 

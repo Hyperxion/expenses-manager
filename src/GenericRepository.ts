@@ -18,6 +18,7 @@ export class BaseRepository<T extends ObjectLiteral> extends Repository<T> {
    * @param userId - ID of user to which entity should exist
    * @returns - Found entity
    */
+  //@Deprecated
   //async findById(id: string, userId: string): Promise<T | null> {
   async findById(where: any): Promise<T | null> {
     return await this.findOne({
