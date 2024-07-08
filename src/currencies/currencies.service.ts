@@ -1,26 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCurrencyDto } from './dto/create-currency.dto';
-import { UpdateCurrencyDto } from './dto/update-currency.dto';
+import { LoggerService } from '../logger/logger.service';
+import { CurrenciesRepository } from './currencies.repository';
 
 @Injectable()
 export class CurrenciesService {
-  create(createCurrencyDto: CreateCurrencyDto) {
-    return 'This action adds a new currency';
+  constructor(
+    private loggerService: LoggerService,
+    private currenciesRepository: CurrenciesRepository,
+  ) {}
+
+  async findAll() {
+    return await this.currenciesRepository.findAllGeneric();
   }
 
-  findAll() {
-    return `This action returns all currencies`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} currency`;
-  }
-
-  update(id: number, updateCurrencyDto: UpdateCurrencyDto) {
-    return `This action updates a #${id} currency`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} currency`;
+  async findOne(id: string) {
+    return await this.currenciesRepository.findGeneric({ id });
   }
 }
