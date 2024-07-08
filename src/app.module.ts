@@ -12,6 +12,7 @@ import { RolesModule } from './roles/roles.module';
 import { TablesModule } from './tables/tables.module';
 import { TagsModule } from './tags/tags.module';
 import { StoresModule } from './stores/stores.module';
+import { CurrenciesModule } from './currencies/currencies.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { StoresModule } from './stores/stores.module';
     TablesModule,
     TagsModule,
     StoresModule,
+    CurrenciesModule,
   ],
   providers: [LoggerService],
 })
