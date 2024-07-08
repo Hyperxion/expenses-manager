@@ -8,9 +8,9 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { StoresService } from './Stores.service';
-import { CreateStoreDto } from './dto/create-Store.dto';
-import { UpdateStoreDto } from './dto/update-Store.dto';
+import { StoresService } from './stores.service';
+import { CreateStoreDto } from './dto/create-store.dto';
+import { UpdateStoreDto } from './dto/update-store.dto';
 import { GetUserId } from '../auth/getUserId.decorator';
 import { AuthGuard } from '../auth/auth.guard';
 import { ApiTags } from '@nestjs/swagger';
