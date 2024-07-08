@@ -8,5 +8,12 @@ import { AuthGuard } from '../auth/auth.guard';
 @UseGuards(AuthGuard)
 @Controller('transaction-types')
 export class TransactionTypesController {
-  constructor(public service: TransactionTypesService) {}
+  constructor(
+    private readonly transacitonTypesService: TransactionTypesService,
+  ) {}
+
+  @Get()
+  findAll() {
+    return this.transacitonTypesService.findAll();
+  }
 }

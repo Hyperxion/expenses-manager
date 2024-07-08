@@ -1,12 +1,15 @@
-import { TransactionType } from './entities/transaction-type.entity';
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { LoggerService } from '../logger/logger.service';
+import { TransactionTypesRepository } from './transactionTypesRepository';
 
 @Injectable()
 export class TransactionTypesService {
   constructor(
-    @InjectRepository(TransactionType)
-    private transactionTypeRepo: Repository<TransactionType>,
+    private loggerService: LoggerService,
+    private transacitonTypesRepository: TransactionTypesRepository,
   ) {}
+
+  async findAll() {
+    return await this.transacitonTypesRepository.findAllGeneric();
+  }
 }
