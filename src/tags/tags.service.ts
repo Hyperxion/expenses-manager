@@ -12,15 +12,16 @@ export class TagsService {
   ) {}
 
   async create(createTagDto: CreateTagDto) {
-    return await this.tagsRepository.createTag(createTagDto);
+    //return await this.tagsRepository.createTag(createTagDto);
+    return await this.tagsRepository.createGeneric(createTagDto);
   }
 
-  findAll() {
-    return `This action returns all tags`;
+  async findAll() {
+    return await this.tagsRepository.findAllGeneric();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} tag`;
+  async findOne(id: string) {
+    return await this.tagsRepository.findById({ id });
   }
 
   update(id: number, updateTagDto: UpdateTagDto) {

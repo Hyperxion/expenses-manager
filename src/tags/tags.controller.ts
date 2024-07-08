@@ -23,7 +23,6 @@ export class TagsController {
 
   @Post()
   create(@Body() createTagDto: CreateTagDto, @GetUserId() userId: string) {
-    console.log(`-----> userId is: ${JSON.stringify(userId, null, 2)}`);
     createTagDto.userId = userId;
     return this.tagsService.create(createTagDto);
   }
@@ -35,7 +34,7 @@ export class TagsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.tagsService.findOne(+id);
+    return this.tagsService.findOne(id);
   }
 
   @Patch(':id')

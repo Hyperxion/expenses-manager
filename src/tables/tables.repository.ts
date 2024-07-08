@@ -42,7 +42,7 @@ export class TablesRepository extends BaseRepository<Table> {
   }
 
   /**
-   * Returns table for particular user
+   * Returns table for particular user. Superadmin's endpoint
    *
    *
    * @param id - table ID
