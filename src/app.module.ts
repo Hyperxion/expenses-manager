@@ -11,6 +11,7 @@ import { LoggerModule } from './logger/logger.module';
 import { RolesModule } from './roles/roles.module';
 import { TablesModule } from './tables/tables.module';
 import { TagsModule } from './tags/tags.module';
+import { StoresModule } from './stores/stores.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { TagsModule } from './tags/tags.module';
     RolesModule,
     TablesModule,
     TagsModule,
+    StoresModule,
   ],
   providers: [LoggerService],
 })
