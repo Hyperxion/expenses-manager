@@ -23,13 +23,46 @@ export class BaseRepository<T extends ObjectLiteral> extends Repository<T> {
     return this.find();
   }
 
+  async removeGeneric(id: string) {
+    const entity = await this.findGeneric({ id });
+
+    if (entity) return this.remove(entity);
+
+    return null;
+  }
+
+  async updateGeneric(id: string, updateEntityDto: DeepPartial<T>) {
+    const entity = await this.findGeneric({ id });
+
+    if (!entity) return;
+
+    const updatedEntity = { ...entity, ...updateEntityDto };
+
+    return await this.save(updatedEntity);
+  }
+
   /**
+   * Where object must follow this structure:
    *
-   * @param id - ID of entity to find
-   * @param userId - ID of user to which entity should exist
+   * *To find by object ID and user ID use this structure*
+   *
+   * ```js
+   * {
+   *   id: id,
+   *   user: { id: userId },
+   * };
+   * ```
+   *
+   * *To find by ID use this structure:*
+   *
+   * ```js
+   * { id };
+   * ```
+   *
+   * @param where - where clause
    * @returns - Found entity
    */
-  async findById(where: any): Promise<T | null> {
+  async findGeneric(where: any): Promise<T | null> {
     return await this.findOne({
       where,
     });

@@ -21,14 +21,14 @@ export class TagsService {
   }
 
   async findOne(id: string) {
-    return await this.tagsRepository.findById({ id });
+    return await this.tagsRepository.findGeneric({ id });
   }
 
-  update(id: number, updateTagDto: UpdateTagDto) {
-    return `This action updates a #${id} tag`;
+  async update(id: string, updateTagDto: UpdateTagDto) {
+    return await this.tagsRepository.updateGeneric(id, updateTagDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} tag`;
+  async remove(id: string) {
+    return await this.tagsRepository.removeGeneric(id);
   }
 }

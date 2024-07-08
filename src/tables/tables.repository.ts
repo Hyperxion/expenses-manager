@@ -55,7 +55,7 @@ export class TablesRepository extends BaseRepository<Table> {
       user: { id: userId },
     };
 
-    return this.findById(where);
+    return this.findGeneric(where);
   }
 
   async getTables(): Promise<Table[]> {
