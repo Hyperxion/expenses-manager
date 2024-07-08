@@ -48,7 +48,7 @@ export class AuthGuard implements CanActivate {
 
       request.userId = decoded.id;
       this.logger.log(
-        `Calling ${handlerClass.name}.${handler.name}()`,
+        `Calling ${handlerClass.name}.${handler.name}() from ${request.url}`,
         AuthGuard.name,
         decoded.id,
       );
