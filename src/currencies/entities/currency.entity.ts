@@ -24,9 +24,6 @@ export class Currency {
   @Column({ unique: true })
   abbreviation: string;
 
-  @ManyToOne(() => User, (user) => user.tables)
-  user: Relation<User>;
-
   @CreateDateColumn()
   createdAt: Date;
 

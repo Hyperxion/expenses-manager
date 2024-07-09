@@ -108,7 +108,6 @@ CREATE TABLE currencies (
   id varchar(36) DEFAULT UUID(),
   name VARCHAR(100) NOT NULL,
   abbreviation VARCHAR(10) NOT NULL,
-  userId VARCHAR(36) NOT NULL,
   createdAt datetime not null default current_timestamp(),
   updatedAt datetime not null default current_timestamp() ON UPDATE current_timestamp(),
   deletedAt datetime default null,
