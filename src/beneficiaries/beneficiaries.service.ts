@@ -12,7 +12,7 @@ export class BeneficiariesService {
   ) {}
 
   async create(createBeneficiaryDto: CreateBeneficiaryDto) {
-    return await this.beneficiariesRepository.createGeneric(
+    return await this.beneficiariesRepository.createBeneficiary(
       createBeneficiaryDto,
     );
   }

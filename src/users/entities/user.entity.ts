@@ -1,3 +1,4 @@
+import { Store } from '../../stores/entities/store.entity';
 import { Table } from '../../tables/entities/table.entity';
 import { Tag } from '../../tags/entities/tag.entity';
 import { BIG_RANGE } from '../../test-utils/test.constants';
@@ -37,6 +38,9 @@ export class User {
 
   @OneToMany(() => Tag, (tag) => tag.user)
   tags: Relation<Table>[];
+
+  @OneToMany(() => Store, (store) => store.user)
+  stores: Relation<Table>[];
 
   @CreateDateColumn()
   createdAt: Date;

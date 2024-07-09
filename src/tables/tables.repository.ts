@@ -9,6 +9,7 @@ import { User } from '../users/entities/user.entity';
 import { CreateTableDto } from './dto/create-table.dto';
 import { UpdateTableDto } from './dto/update-table.dto';
 import { BaseRepository } from '../GenericRepository';
+import { processError } from '../constants';
 
 @Injectable()
 export class TablesRepository extends BaseRepository<Table> {
@@ -28,12 +29,7 @@ export class TablesRepository extends BaseRepository<Table> {
 
       return table;
     } catch (error) {
-      if (error.code === '23505') {
-        // duplicate name
-        throw new ConflictException('Table name already exists');
-      } else {
-        throw new InternalServerErrorException();
-      }
+      processError(error, Table.name);
     }
   }
 

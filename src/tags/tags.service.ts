@@ -12,8 +12,7 @@ export class TagsService {
   ) {}
 
   async create(createTagDto: CreateTagDto) {
-    //return await this.tagsRepository.createTag(createTagDto);
-    return await this.tagsRepository.createGeneric(createTagDto);
+    return await this.tagsRepository.createTag(createTagDto);
   }
 
   async findAll() {

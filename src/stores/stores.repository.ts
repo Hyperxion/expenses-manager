@@ -8,6 +8,7 @@ import { BaseRepository } from '../GenericRepository';
 import { Store } from './entities/store.entity';
 import { CreateStoreDto } from './dto/create-store.dto';
 import { User } from '../users/entities/user.entity';
+import { processError } from '../constants';
 
 @Injectable()
 export class StoresRepository extends BaseRepository<Store> {
@@ -26,12 +27,7 @@ export class StoresRepository extends BaseRepository<Store> {
 
       return store;
     } catch (error) {
-      if (error.code === '23505') {
-        // duplicate name
-        throw new ConflictException('Store name already exists');
-      } else {
-        throw new InternalServerErrorException();
-      }
+      processError(error, Store.name);
     }
   }
 }

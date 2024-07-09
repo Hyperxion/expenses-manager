@@ -13,6 +13,7 @@ import { CreateBeneficiaryDto } from './dto/create-beneficiary.dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { UpdateBeneficiaryDto } from './dto/update-beneficiary.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { GetUserId } from '../auth/getUserId.decorator';
 
 @ApiTags('Beneficiaries')
 @UseGuards(AuthGuard)
@@ -21,7 +22,11 @@ export class BeneficiariesController {
   constructor(private readonly beneficiariesService: BeneficiariesService) {}
 
   @Post()
-  create(@Body() createBeneficiaryDto: CreateBeneficiaryDto) {
+  create(
+    @Body() createBeneficiaryDto: CreateBeneficiaryDto,
+    @GetUserId() userId: string,
+  ) {
+    createBeneficiaryDto.userId = userId;
     return this.beneficiariesService.create(createBeneficiaryDto);
   }
 

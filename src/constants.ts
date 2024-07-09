@@ -1,3 +1,8 @@
+import {
+  ConflictException,
+  InternalServerErrorException,
+} from '@nestjs/common';
+
 export namespace Constants {
   export enum Roles {
     Admin = '5aa5924d-e9e0-4054-884c-af20e1ccaeca',
@@ -11,3 +16,12 @@ export namespace Constants {
     Credit = 'ddcf99f2-3116-42bf-adf6-b3f7681ac6a6',
   }
 }
+
+export const processError = (error, entityName: string) => {
+  if (error.code === '23505') {
+    // duplicate name
+    throw new ConflictException(`${entityName} name already exists`);
+  } else {
+    throw new InternalServerErrorException();
+  }
+};

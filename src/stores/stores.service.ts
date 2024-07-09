@@ -12,7 +12,7 @@ export class StoresService {
   ) {}
 
   async create(createStoreDto: CreateStoreDto) {
-    return await this.storesRepository.createGeneric(createStoreDto);
+    return await this.storesRepository.createStore(createStoreDto);
   }
 
   async findAll() {

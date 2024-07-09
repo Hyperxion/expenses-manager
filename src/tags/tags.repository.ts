@@ -8,6 +8,7 @@ import { BaseRepository } from '../GenericRepository';
 import { Tag } from './entities/tag.entity';
 import { CreateTagDto } from './dto/create-tag.dto';
 import { User } from '../users/entities/user.entity';
+import { processError } from '../constants';
 
 @Injectable()
 export class TagsRepository extends BaseRepository<Tag> {
@@ -26,12 +27,7 @@ export class TagsRepository extends BaseRepository<Tag> {
 
       return tag;
     } catch (error) {
-      if (error.code === '23505') {
-        // duplicate name
-        throw new ConflictException('Tag name already exists');
-      } else {
-        throw new InternalServerErrorException();
-      }
+      processError(error, Tag.name);
     }
   }
 }

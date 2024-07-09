@@ -8,6 +8,7 @@ import { BaseRepository } from '../GenericRepository';
 import { User } from '../users/entities/user.entity';
 import { CreateBeneficiaryDto } from './dto/create-beneficiary.dto';
 import { Beneficiary } from './entities/beneficiary.entity';
+import { processError } from '../constants';
 
 @Injectable()
 export class BeneficiariesRepository extends BaseRepository<Beneficiary> {
@@ -26,12 +27,7 @@ export class BeneficiariesRepository extends BaseRepository<Beneficiary> {
 
       return beneficiary;
     } catch (error) {
-      if (error.code === '23505') {
-        // duplicate name
-        throw new ConflictException('Store name already exists');
-      } else {
-        throw new InternalServerErrorException();
-      }
+      processError(error, Beneficiary.name);
     }
   }
 }
