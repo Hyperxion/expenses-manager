@@ -48,16 +48,15 @@ export class BaseRepository<T extends ObjectLiteral> extends Repository<T> {
 
   async removeGeneric(id: string) {
     const entity = await this.findGeneric({ id });
+    if (entity) return await this.remove(entity);
 
-    if (entity) return this.remove(entity);
-
-    return null;
+    throw new Error('404');
   }
 
   async updateGeneric(id: string, updateEntityDto: DeepPartial<T>) {
     const entity = await this.findGeneric({ id });
 
-    if (!entity) return;
+    if (!entity) throw new Error('404');
 
     const updatedEntity = { ...entity, ...updateEntityDto };
 
@@ -76,7 +75,7 @@ export class BaseRepository<T extends ObjectLiteral> extends Repository<T> {
    * };
    * ```
    *
-   * *To find by ID use this structure:*
+   * *To find by object ID only use this structure:*
    *
    * ```js
    * { id };

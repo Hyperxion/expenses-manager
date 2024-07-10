@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   UseGuards,
+  Res,
+  HttpStatus,
 } from '@nestjs/common';
 import { StoresService } from './stores.service';
 import { CreateStoreDto } from './dto/create-store.dto';
@@ -14,6 +16,7 @@ import { UpdateStoreDto } from './dto/update-store.dto';
 import { GetUserId } from '../auth/getUserId.decorator';
 import { AuthGuard } from '../auth/auth.guard';
 import { ApiTags } from '@nestjs/swagger';
+import { processError } from '../constants';
 
 @ApiTags('Stores')
 @UseGuards(AuthGuard)
@@ -22,28 +25,40 @@ export class StoresController {
   constructor(private readonly storesService: StoresService) {}
 
   @Post()
-  create(@Body() createStoreDto: CreateStoreDto, @GetUserId() userId: string) {
+  async create(
+    @Body() createStoreDto: CreateStoreDto,
+    @GetUserId() userId: string,
+  ) {
     createStoreDto.userId = userId;
     return this.storesService.create(createStoreDto);
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.storesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     return this.storesService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStoreDto: UpdateStoreDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateStoreDto: UpdateStoreDto,
+  ) {
     return this.storesService.update(id, updateStoreDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.storesService.remove(id);
+  async remove(@Param('id') id: string) {
+    try {
+      await this.storesService.remove(id);
+
+      return id;
+    } catch (error) {
+      processError(error, 'Store');
+    }
   }
 }

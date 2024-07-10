@@ -1,6 +1,7 @@
 import {
   ConflictException,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 
 export namespace Constants {
@@ -18,8 +19,9 @@ export namespace Constants {
 }
 
 export const processError = (error, entityName: string) => {
-  if (error.code === '23505') {
-    // duplicate name
+  if (error.message === '404') {
+    throw new NotFoundException(`${entityName} not found`);
+  } else if (error.code === '23505') {
     throw new ConflictException(`${entityName} name already exists`);
   } else {
     throw new InternalServerErrorException();
