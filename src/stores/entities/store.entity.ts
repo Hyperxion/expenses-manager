@@ -5,11 +5,13 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   Relation,
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
+import { Transaction } from '../../transactions/entities/transaction.entity';
 
 @Entity()
 export class Store {
@@ -20,8 +22,11 @@ export class Store {
   @Column({ unique: true })
   name: string;
 
-  @ManyToOne(() => User, (user) => user.tables)
+  @ManyToOne(() => User, (user) => user.stores)
   user: Relation<User>;
+
+  @OneToMany(() => Transaction, (transaction) => transaction.store)
+  transactions: Relation<Transaction>[];
 
   @CreateDateColumn()
   createdAt: Date;

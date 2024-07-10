@@ -4,9 +4,12 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
+  Relation,
   UpdateDateColumn,
 } from 'typeorm';
+import { Transaction } from '../../transactions/entities/transaction.entity';
 
 @Entity()
 export class TransactionType {
@@ -16,6 +19,9 @@ export class TransactionType {
   @ApiProperty()
   @Column({ unique: true })
   type: string;
+
+  @OneToMany(() => Transaction, (transaction) => transaction.type)
+  transactions: Relation<Transaction>[];
 
   @CreateDateColumn()
   createdAt: Date;

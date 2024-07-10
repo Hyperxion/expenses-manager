@@ -20,7 +20,7 @@ export class Tag {
   @Column({ unique: true })
   name: string;
 
-  @ManyToOne(() => User, (user) => user.tables)
+  @ManyToOne(() => User, (user) => user.tags)
   user: Relation<User>;
 
   @CreateDateColumn()

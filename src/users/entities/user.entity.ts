@@ -20,6 +20,7 @@ import {
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { TransactionCategory } from '../../transaction-categories/entities/transaction-category.entity';
+import { Transaction } from '../../transactions/entities/transaction.entity';
 
 @Entity()
 export class User {
@@ -44,14 +45,14 @@ export class User {
   @OneToMany(() => Store, (store) => store.user)
   stores: Relation<Store>[];
 
+  @OneToMany(() => Transaction, (transaction) => transaction.user)
+  transactions: Relation<Transaction>[];
+
+  @OneToMany(() => TransactionCategory, (category) => category.user)
+  transactionCategories: Relation<TransactionCategory>[];
+
   @OneToMany(() => Beneficiary, (beneficiary) => beneficiary.user)
   beneficiaries: Relation<Beneficiary>[];
-
-  @OneToMany(
-    () => TransactionCategory,
-    (transactionCategory) => transactionCategory.user,
-  )
-  transactionCategories: Relation<TransactionCategory>[];
 
   @CreateDateColumn()
   createdAt: Date;

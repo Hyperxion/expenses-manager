@@ -5,11 +5,13 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   Relation,
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
+import { Transaction } from '../../transactions/entities/transaction.entity';
 
 @Entity()
 export class Currency {
@@ -23,6 +25,9 @@ export class Currency {
   @ApiProperty()
   @Column({ unique: true })
   abbreviation: string;
+
+  @OneToMany(() => Transaction, (transaction) => transaction.currency)
+  transactions: Relation<Transaction>[];
 
   @CreateDateColumn()
   createdAt: Date;
