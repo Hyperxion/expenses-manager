@@ -33,7 +33,6 @@ export class Transaction {
   @Column()
   note: string;
 
-  @ApiProperty()
   @ManyToOne(() => User, (user) => user.transactions)
   user: Relation<User>;
 
