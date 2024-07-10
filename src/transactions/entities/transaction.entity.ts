@@ -15,6 +15,7 @@ import { TransactionCategory } from '../../transaction-categories/entities/trans
 import { Beneficiary } from '../../beneficiaries/entities/beneficiary.entity';
 import { Currency } from '../../currencies/entities/currency.entity';
 import { Store } from '../../stores/entities/store.entity';
+import { Table } from '../../tables/entities/table.entity';
 
 @Entity()
 export class Transaction {
@@ -26,7 +27,7 @@ export class Transaction {
   date: Date;
 
   @ApiProperty()
-  @Column()
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
   amount: Number;
 
   @ApiProperty()
@@ -57,8 +58,8 @@ export class Transaction {
   store: Relation<Store>;
 
   @ApiProperty()
-  @ManyToOne(() => User, (user) => user.transactions)
-  table: Relation<User>;
+  @ManyToOne(() => Table, (table) => table.transactions)
+  table: Relation<Table>;
 
   @CreateDateColumn()
   createdAt: Date;

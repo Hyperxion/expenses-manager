@@ -19,10 +19,14 @@ export class TransactionsRepository extends BaseRepository<Transaction> {
       user.id = createTransactionDto.userId;
 
       transaction.user = user;
+      console.log(
+        `-----> createTransactionDto is: ${JSON.stringify(createTransactionDto, null, 2)}`,
+      );
       await this.save(transaction);
 
       return transaction;
     } catch (error) {
+      console.log(`-----> error is: ${JSON.stringify(error, null, 2)}`);
       processError(error, Transaction.name);
     }
   }
