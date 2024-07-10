@@ -10,7 +10,6 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
-import { TransactionType } from '../../transaction-types/entities/transaction-type.entity';
 
 @Entity()
 export class TransactionCategory {
