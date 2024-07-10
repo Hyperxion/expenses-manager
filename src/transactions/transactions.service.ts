@@ -19,6 +19,7 @@ export class TransactionsService {
 
   async findAll() {
     return await this.transactionsRepository.findAllGeneric();
+    //return await this.transactionsRepository.findAllWithDetails();
   }
 
   async findOne(id: string) {

@@ -3,7 +3,7 @@ import { CreateTransactionCategoryDto } from './dto/create-transaction-category.
 import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { processError } from '../constants';
-import { BaseRepository } from '../GenericRepository';
+import { BaseRepository } from '../BaseRepository';
 import { User } from '../users/entities/user.entity';
 
 @Injectable()

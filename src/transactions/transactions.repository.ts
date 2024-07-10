@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { processError } from '../constants';
-import { BaseRepository } from '../GenericRepository';
+import { BaseRepository } from '../BaseRepository';
 import { User } from '../users/entities/user.entity';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { Transaction } from './entities/transaction.entity';
@@ -30,4 +30,6 @@ export class TransactionsRepository extends BaseRepository<Transaction> {
       processError(error, Transaction.name);
     }
   }
+
+  async findAllWithDetails() {}
 }

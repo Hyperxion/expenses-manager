@@ -8,7 +8,7 @@ import { Table } from './entities/table.entity';
 import { User } from '../users/entities/user.entity';
 import { CreateTableDto } from './dto/create-table.dto';
 import { UpdateTableDto } from './dto/update-table.dto';
-import { BaseRepository } from '../GenericRepository';
+import { BaseRepository } from '../BaseRepository';
 import { processError } from '../constants';
 
 @Injectable()
