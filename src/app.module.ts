@@ -14,6 +14,7 @@ import { TagsModule } from './tags/tags.module';
 import { StoresModule } from './stores/stores.module';
 import { CurrenciesModule } from './currencies/currencies.module';
 import { BeneficiariesModule } from './beneficiaries/beneficiaries.module';
+import { TransactionCategoriesModule } from './transaction-categories/transaction-categories.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { BeneficiariesModule } from './beneficiaries/beneficiaries.module';
     StoresModule,
     CurrenciesModule,
     BeneficiariesModule,
+    TransactionCategoriesModule,
   ],
   providers: [LoggerService],
 })

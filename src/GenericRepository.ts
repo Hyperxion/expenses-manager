@@ -5,11 +5,7 @@ import {
   EntityTarget,
   DeepPartial,
 } from 'typeorm';
-import { User } from './users/entities/user.entity';
-import {
-  ConflictException,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { processError } from './constants';
 
 export class BaseRepository<T extends ObjectLiteral> extends Repository<T> {
   constructor(
@@ -47,20 +43,32 @@ export class BaseRepository<T extends ObjectLiteral> extends Repository<T> {
   }
 
   async removeGeneric(id: string) {
-    const entity = await this.findGeneric({ id });
-    if (entity) return await this.remove(entity);
+    try {
+      const entity = await this.findGeneric({ id });
+      if (entity) {
+        await this.remove(entity);
 
-    throw new Error('404');
+        return id;
+      }
+
+      throw new Error('404');
+    } catch (error) {
+      processError(error, 'Object');
+    }
   }
 
   async updateGeneric(id: string, updateEntityDto: DeepPartial<T>) {
-    const entity = await this.findGeneric({ id });
+    try {
+      const entity = await this.findGeneric({ id });
 
-    if (!entity) throw new Error('404');
+      if (!entity) throw new Error('404');
 
-    const updatedEntity = { ...entity, ...updateEntityDto };
+      const updatedEntity = { ...entity, ...updateEntityDto };
 
-    return await this.save(updatedEntity);
+      return await this.save(updatedEntity);
+    } catch (error) {
+      processError(error, 'Object');
+    }
   }
 
   /**
