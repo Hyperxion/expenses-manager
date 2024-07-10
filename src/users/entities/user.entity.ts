@@ -1,3 +1,4 @@
+import { Beneficiary } from '../../beneficiaries/entities/beneficiary.entity';
 import { Store } from '../../stores/entities/store.entity';
 import { Table } from '../../tables/entities/table.entity';
 import { Tag } from '../../tags/entities/tag.entity';
@@ -18,6 +19,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
+import { TransactionCategory } from '../../transaction-categories/entities/transaction-category.entity';
 
 @Entity()
 export class User {
@@ -37,10 +39,19 @@ export class User {
   tables: Relation<Table>[];
 
   @OneToMany(() => Tag, (tag) => tag.user)
-  tags: Relation<Table>[];
+  tags: Relation<Tag>[];
 
   @OneToMany(() => Store, (store) => store.user)
-  stores: Relation<Table>[];
+  stores: Relation<Store>[];
+
+  @OneToMany(() => Beneficiary, (beneficiary) => beneficiary.user)
+  beneficiaries: Relation<Beneficiary>[];
+
+  @OneToMany(
+    () => TransactionCategory,
+    (transactionCategory) => transactionCategory.user,
+  )
+  transactionCategories: Relation<TransactionCategory>[];
 
   @CreateDateColumn()
   createdAt: Date;
