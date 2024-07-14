@@ -1,14 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  Relation,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, Relation } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { TransactionType } from '../../transaction-types/entities/transaction-type.entity';
 import { TransactionCategory } from '../../transaction-categories/entities/transaction-category.entity';

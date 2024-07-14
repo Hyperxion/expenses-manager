@@ -1,14 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  Relation,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, Relation } from 'typeorm';
 import { Transaction } from '../../transactions/entities/transaction.entity';
 import { EntityTemplate } from '../../interfaces/EntityTemplate';
 
