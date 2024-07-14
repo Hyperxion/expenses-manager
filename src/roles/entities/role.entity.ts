@@ -7,12 +7,10 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { EntityTemplate } from '../../interfaces/EntityTemplate';
 
 @Entity()
-export class Role {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Role extends EntityTemplate {
   @ApiProperty()
   @Column({ unique: true })
   name: string;
@@ -20,13 +18,4 @@ export class Role {
   @ApiProperty()
   @Column()
   description: string;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt: Date;
 }

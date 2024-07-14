@@ -16,12 +16,10 @@ import { Beneficiary } from '../../beneficiaries/entities/beneficiary.entity';
 import { Currency } from '../../currencies/entities/currency.entity';
 import { Store } from '../../stores/entities/store.entity';
 import { Table } from '../../tables/entities/table.entity';
+import { EntityTemplate } from '../../interfaces/EntityTemplate';
 
 @Entity()
-export class Transaction {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Transaction extends EntityTemplate {
   @ApiProperty()
   @Column()
   date: Date;
@@ -60,13 +58,4 @@ export class Transaction {
   @ApiProperty()
   @ManyToOne(() => Table, (table) => table.transactions)
   table: Relation<Table>;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt: Date;
 }

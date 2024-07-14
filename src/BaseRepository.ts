@@ -10,7 +10,7 @@ import { processError } from './constants';
 export class BaseRepository<T extends ObjectLiteral> extends Repository<T> {
   constructor(
     private readonly entityTarget: EntityTarget<T>,
-    private readonly dataSource: DataSource,
+    protected readonly dataSource: DataSource,
   ) {
     super(entityTarget, dataSource.createEntityManager());
   }

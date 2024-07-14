@@ -21,12 +21,10 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { TransactionCategory } from '../../transaction-categories/entities/transaction-category.entity';
 import { Transaction } from '../../transactions/entities/transaction.entity';
+import { EntityTemplate } from '../../interfaces/EntityTemplate';
 
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class User extends EntityTemplate {
   @Column({ unique: true })
   username: string;
 
@@ -53,33 +51,4 @@ export class User {
 
   @OneToMany(() => Beneficiary, (beneficiary) => beneficiary.user)
   beneficiaries: Relation<Beneficiary>[];
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt: Date;
-
-  constructor() {}
-
-  /**
-   *  Generates instance of a class with random property values.
-   *  Meant for creating testing data
-   *
-   *  TODO: Implement builder pattern
-   */
-  public static generateTestInstance() {
-    const user = new User();
-    user.id = uuidv4();
-    user.username =
-      getRandomValueFromArray(UsersMetadata.NAMES) + randomNumber(BIG_RANGE);
-    user.password =
-      getRandomValueFromArray(UsersMetadata.SURENAMES) +
-      randomNumber(BIG_RANGE);
-
-    return user;
-  }
 }

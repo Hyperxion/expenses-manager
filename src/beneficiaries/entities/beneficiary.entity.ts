@@ -12,12 +12,10 @@ import {
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Transaction } from '../../transactions/entities/transaction.entity';
+import { EntityTemplate } from '../../interfaces/EntityTemplate';
 
 @Entity()
-export class Beneficiary {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Beneficiary extends EntityTemplate {
   @ApiProperty()
   @Column({ unique: true })
   name: string;
@@ -27,13 +25,4 @@ export class Beneficiary {
 
   @OneToMany(() => Transaction, (transaction) => transaction.beneficiary)
   transactions: Relation<Beneficiary>[];
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt: Date;
 }

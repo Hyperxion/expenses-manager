@@ -12,12 +12,10 @@ import {
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Transaction } from '../../transactions/entities/transaction.entity';
+import { EntityTemplate } from '../../interfaces/EntityTemplate';
 
 @Entity()
-export class Store {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Store extends EntityTemplate {
   @ApiProperty()
   @Column({ unique: true })
   name: string;
@@ -27,13 +25,4 @@ export class Store {
 
   @OneToMany(() => Transaction, (transaction) => transaction.store)
   transactions: Relation<Transaction>[];
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt: Date;
 }

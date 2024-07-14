@@ -10,25 +10,14 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Transaction } from '../../transactions/entities/transaction.entity';
+import { EntityTemplate } from '../../interfaces/EntityTemplate';
 
 @Entity()
-export class TransactionType {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class TransactionType extends EntityTemplate {
   @ApiProperty()
   @Column({ unique: true })
   type: string;
 
   @OneToMany(() => Transaction, (transaction) => transaction.type)
   transactions: Relation<Transaction>[];
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt: Date;
 }
