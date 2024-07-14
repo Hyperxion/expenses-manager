@@ -13,7 +13,7 @@ import {
 export class UpdateTransactionDto extends PartialType(CreateTransactionDto) {
   @ApiProperty()
   @IsDate()
-  date: string;
+  date: Date;
 
   @ApiProperty()
   @IsNumber()
@@ -48,4 +48,7 @@ export class UpdateTransactionDto extends PartialType(CreateTransactionDto) {
   @ApiProperty()
   @IsUUID()
   tableId: string;
+
+  @ApiProperty({ required: false })
+  tagIds?: string[];
 }

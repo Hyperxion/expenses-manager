@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { processError } from '../constants';
 import { BaseRepository } from '../BaseRepository';
@@ -11,6 +11,8 @@ import { Beneficiary } from '../beneficiaries/entities/beneficiary.entity';
 import { Currency } from '../currencies/entities/currency.entity';
 import { Store } from '../stores/entities/store.entity';
 import { Table } from '../tables/entities/table.entity';
+import { Tag } from '../tags/entities/tag.entity';
+import { TagsRepository } from '../tags/tags.repository';
 
 @Injectable()
 export class TransactionsRepository extends BaseRepository<Transaction> {
@@ -20,26 +22,93 @@ export class TransactionsRepository extends BaseRepository<Transaction> {
 
   async createTransaction(createTransactionDto: CreateTransactionDto) {
     try {
-      const user = new User();
-      user.id = createTransactionDto.userId;
+      const tags: Tag[] = [];
 
-      const type = new TransactionType();
-      type.id = createTransactionDto.typeId;
+      if (createTransactionDto.tagIds) {
+        const tagRepository: TagsRepository = new TagsRepository(
+          this.dataSource,
+        );
 
-      const category = new TransactionCategory();
-      category.id = createTransactionDto.categoryId;
+        for (const tagId of createTransactionDto.tagIds) {
+          const tag = await tagRepository.findOneBy({ id: tagId });
 
-      const beneficiary = new Beneficiary();
-      beneficiary.id = createTransactionDto.beneficiaryId;
+          if (tag) {
+            tags.push(tag);
+          } else {
+            tags.length = 0;
+            throw new NotFoundException(`Tag with ID ${tagId}`);
+          }
+        }
+      }
 
-      const currency = new Currency();
-      currency.id = createTransactionDto.currencyId;
+      const user = await this.dataSource.getRepository(User).findOne({
+        where: { id: createTransactionDto.userId },
+        select: ['id'],
+      });
+      if (!user)
+        throw new NotFoundException(
+          `User with ID ${createTransactionDto.userId}`,
+        );
 
-      const store = new Store();
-      store.id = createTransactionDto.storeId;
+      const type = await this.dataSource
+        .getRepository(TransactionType)
+        .findOne({
+          where: { id: createTransactionDto.typeId },
+          select: ['id'],
+        });
+      if (!type)
+        throw new NotFoundException(
+          `Transaction Type with ID ${createTransactionDto.typeId}`,
+        );
 
-      const table = new Table();
-      table.id = createTransactionDto.tableId;
+      const category = await this.dataSource
+        .getRepository(TransactionCategory)
+        .findOne({
+          where: { id: createTransactionDto.categoryId },
+          select: ['id'],
+        });
+      if (!category)
+        throw new NotFoundException(
+          `Transaction Category with ID ${createTransactionDto.typeId}`,
+        );
+
+      const beneficiary = await this.dataSource
+        .getRepository(Beneficiary)
+        .findOne({
+          where: { id: createTransactionDto.categoryId },
+          select: ['id'],
+        });
+      if (!beneficiary)
+        throw new NotFoundException(
+          `Beneficiary with ID ${createTransactionDto.beneficiaryId}`,
+        );
+
+      const currency = await this.dataSource.getRepository(Currency).findOne({
+        where: { id: createTransactionDto.currencyId },
+        select: ['id'],
+      });
+      if (!currency)
+        throw new NotFoundException(
+          `Currency with ID ${createTransactionDto.currencyId}`,
+        );
+
+      const store = await this.dataSource.getRepository(Store).findOne({
+        where: { id: createTransactionDto.storeId },
+        select: ['id'],
+      });
+      if (!store)
+        throw new NotFoundException(
+          `Store with ID ${createTransactionDto.storeId}`,
+        );
+
+      const table = await this.dataSource.getRepository(Table).findOne({
+        where: { id: createTransactionDto.tableId },
+        select: ['id'],
+      });
+      if (!table)
+        throw new NotFoundException(
+          `Table with ID ${createTransactionDto.tableId}`,
+        );
 
       const transaction = this.create(createTransactionDto);
 
@@ -50,12 +119,17 @@ export class TransactionsRepository extends BaseRepository<Transaction> {
       transaction.currency = currency;
       transaction.store = store;
       transaction.table = table;
+      transaction.tags = tags;
 
       await this.save(transaction);
 
       return transaction;
     } catch (error) {
-      processError(error, Transaction.name);
+      if (error.status == 404) {
+        processError({ message: '404' }, error.message);
+      } else {
+        processError(error, Transaction.name);
+      }
     }
   }
 
@@ -73,6 +147,7 @@ export class TransactionsRepository extends BaseRepository<Transaction> {
       .leftJoin('transaction.currency', 'currency')
       .leftJoin('transaction.store', 'store')
       .leftJoin('transaction.table', 'table')
+      .leftJoin('transaction.tags', 'tags')
       .select([
         'transaction.id',
         'transaction.date',
@@ -89,6 +164,8 @@ export class TransactionsRepository extends BaseRepository<Transaction> {
         'store.name',
         'table.id',
         'table.name',
+        'tags.id',
+        'tags.name',
       ])
       .getMany();
   }

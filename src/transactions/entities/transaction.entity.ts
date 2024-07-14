@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, ManyToOne, Relation } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  Relation,
+} from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { TransactionType } from '../../transaction-types/entities/transaction-type.entity';
 import { TransactionCategory } from '../../transaction-categories/entities/transaction-category.entity';
@@ -8,6 +15,7 @@ import { Currency } from '../../currencies/entities/currency.entity';
 import { Store } from '../../stores/entities/store.entity';
 import { Table } from '../../tables/entities/table.entity';
 import { EntityTemplate } from '../../interfaces/EntityTemplate';
+import { Tag } from '../../tags/entities/tag.entity';
 
 @Entity()
 export class Transaction extends EntityTemplate {
@@ -18,6 +26,10 @@ export class Transaction extends EntityTemplate {
   @ApiProperty()
   @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
   amount: Number;
+
+  @ManyToMany(() => Tag, { cascade: true })
+  @JoinTable()
+  tags: Relation<Tag[]>;
 
   @ApiProperty()
   @Column()

@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, ManyToOne, Relation } from 'typeorm';
+import { Column, Entity, ManyToMany, ManyToOne, Relation } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { EntityTemplate } from '../../interfaces/EntityTemplate';
+import { Transaction } from '../../transactions/entities/transaction.entity';
 
 @Entity()
 export class Tag extends EntityTemplate {
@@ -11,4 +12,7 @@ export class Tag extends EntityTemplate {
 
   @ManyToOne(() => User, (user) => user.tags)
   user: Relation<User>;
+
+  @ManyToMany(() => Transaction)
+  transactions: Relation<Transaction[]>;
 }

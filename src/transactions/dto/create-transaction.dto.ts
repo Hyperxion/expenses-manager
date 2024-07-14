@@ -49,5 +49,8 @@ export class CreateTransactionDto {
   @IsUUID()
   tableId: string;
 
+  @ApiProperty({ required: false })
+  tagIds?: string[];
+
   userId: string;
 }

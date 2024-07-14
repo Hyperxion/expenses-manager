@@ -15,29 +15,6 @@ export class BaseRepository<T extends ObjectLiteral> extends Repository<T> {
     super(entityTarget, dataSource.createEntityManager());
   }
 
-  /**
-   * It works but does not catches errors. Everything is OK even console throws error.
-   * Try-Catch statement did not help
-   */
-  // async createGeneric(newEntity: DeepPartial<T>) {
-  //   try {
-  //     const entity = this.create(newEntity);
-  //     const user = new User();
-  //     user.id = newEntity.userId;
-
-  //     entity.user = user;
-
-  //     this.save(entity);
-  //   } catch (error) {
-  //     if (error.code === '23505') {
-  //       // duplicate name
-  //       throw new ConflictException('Store name already exists');
-  //     } else {
-  //       throw new InternalServerErrorException();
-  //     }
-  //   }
-  // }
-
   async findAllGeneric(): Promise<T[]> {
     return this.find();
   }
