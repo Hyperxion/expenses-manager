@@ -1,21 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  Relation,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, Relation } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
+import { Transaction } from '../../transactions/entities/transaction.entity';
+import { EntityTemplate } from '../../interfaces/EntityTemplate';
 
 @Entity()
-export class Currency {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Currency extends EntityTemplate {
   @ApiProperty()
   @Column({ unique: true })
   name: string;
@@ -24,12 +14,6 @@ export class Currency {
   @Column({ unique: true })
   abbreviation: string;
 
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt: Date;
+  @OneToMany(() => Transaction, (transaction) => transaction.currency)
+  transactions: Relation<Transaction>[];
 }

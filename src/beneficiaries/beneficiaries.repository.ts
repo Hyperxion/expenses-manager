@@ -4,7 +4,7 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { BaseRepository } from '../GenericRepository';
+import { BaseRepository } from '../BaseRepository';
 import { User } from '../users/entities/user.entity';
 import { CreateBeneficiaryDto } from './dto/create-beneficiary.dto';
 import { Beneficiary } from './entities/beneficiary.entity';

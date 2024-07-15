@@ -1,18 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity } from 'typeorm';
+import { EntityTemplate } from '../../interfaces/EntityTemplate';
 
 @Entity()
-export class Role {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Role extends EntityTemplate {
   @ApiProperty()
   @Column({ unique: true })
   name: string;
@@ -20,13 +11,4 @@ export class Role {
   @ApiProperty()
   @Column()
   description: string;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt: Date;
 }

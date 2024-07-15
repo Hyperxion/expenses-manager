@@ -8,4 +8,10 @@ export class UpdateBeneficiaryDto extends PartialType(CreateBeneficiaryDto) {
   @MinLength(4)
   @MaxLength(50)
   name: string;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @MinLength(2)
+  @MaxLength(100)
+  accountNumber?: string;
 }

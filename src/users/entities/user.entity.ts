@@ -8,24 +8,14 @@ import {
   getRandomValueFromArray,
   randomNumber,
 } from '../../test-utils/util-functions';
-import {
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  Relation,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, Relation } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { TransactionCategory } from '../../transaction-categories/entities/transaction-category.entity';
+import { Transaction } from '../../transactions/entities/transaction.entity';
+import { EntityTemplate } from '../../interfaces/EntityTemplate';
 
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class User extends EntityTemplate {
   @Column({ unique: true })
   username: string;
 
@@ -44,41 +34,12 @@ export class User {
   @OneToMany(() => Store, (store) => store.user)
   stores: Relation<Store>[];
 
-  @OneToMany(() => Beneficiary, (beneficiary) => beneficiary.user)
-  beneficiaries: Relation<Beneficiary>[];
+  @OneToMany(() => Transaction, (transaction) => transaction.user)
+  transactions: Relation<Transaction>[];
 
-  @OneToMany(
-    () => TransactionCategory,
-    (transactionCategory) => transactionCategory.user,
-  )
+  @OneToMany(() => TransactionCategory, (category) => category.user)
   transactionCategories: Relation<TransactionCategory>[];
 
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt: Date;
-
-  constructor() {}
-
-  /**
-   *  Generates instance of a class with random property values.
-   *  Meant for creating testing data
-   *
-   *  TODO: Implement builder pattern
-   */
-  public static generateTestInstance() {
-    const user = new User();
-    user.id = uuidv4();
-    user.username =
-      getRandomValueFromArray(UsersMetadata.NAMES) + randomNumber(BIG_RANGE);
-    user.password =
-      getRandomValueFromArray(UsersMetadata.SURENAMES) +
-      randomNumber(BIG_RANGE);
-
-    return user;
-  }
+  @OneToMany(() => Beneficiary, (beneficiary) => beneficiary.user)
+  beneficiaries: Relation<Beneficiary>[];
 }

@@ -7,8 +7,6 @@ import {
   Param,
   Delete,
   UseGuards,
-  Res,
-  HttpStatus,
 } from '@nestjs/common';
 import { StoresService } from './stores.service';
 import { CreateStoreDto } from './dto/create-store.dto';

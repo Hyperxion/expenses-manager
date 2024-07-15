@@ -1,28 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, Relation } from 'typeorm';
+import { Transaction } from '../../transactions/entities/transaction.entity';
+import { EntityTemplate } from '../../interfaces/EntityTemplate';
 
 @Entity()
-export class TransactionType {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class TransactionType extends EntityTemplate {
   @ApiProperty()
   @Column({ unique: true })
   type: string;
 
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt: Date;
+  @OneToMany(() => Transaction, (transaction) => transaction.type)
+  transactions: Relation<Transaction>[];
 }
