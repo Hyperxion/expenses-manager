@@ -10,6 +10,10 @@ export class Beneficiary extends EntityTemplate {
   @Column({ unique: true })
   name: string;
 
+  @ApiProperty({ required: false })
+  @Column({ unique: true, nullable: true })
+  accountNumber?: string;
+
   @ManyToOne(() => User, (user) => user.beneficiaries)
   user: Relation<User>;
 
