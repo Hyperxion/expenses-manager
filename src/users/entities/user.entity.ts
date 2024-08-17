@@ -12,7 +12,7 @@ import { Column, Entity, OneToMany, Relation } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { TransactionCategory } from '../../transaction-categories/entities/transaction-category.entity';
 import { Transaction } from '../../transactions/entities/transaction.entity';
-import { EntityTemplate } from '../../interfaces/EntityTemplate';
+import { EntityTemplate } from '../../interfaces/entityTemplate';
 
 @Entity()
 export class User extends EntityTemplate {
