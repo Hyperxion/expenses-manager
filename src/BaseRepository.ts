@@ -4,6 +4,7 @@ import {
   ObjectLiteral,
   EntityTarget,
   DeepPartial,
+  FindManyOptions,
 } from 'typeorm';
 import { processError } from './constants';
 
@@ -15,8 +16,8 @@ export class BaseRepository<T extends ObjectLiteral> extends Repository<T> {
     super(entityTarget, dataSource.createEntityManager());
   }
 
-  async findAllGeneric(): Promise<T[]> {
-    return this.find();
+  async findAllGeneric(options?: FindManyOptions<T>): Promise<T[]> {
+    return this.find(options);
   }
 
   async removeGeneric(id: string) {

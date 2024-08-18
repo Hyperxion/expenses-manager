@@ -27,3 +27,8 @@ export const processError = (error, entityName: string) => {
     throw new InternalServerErrorException();
   }
 };
+
+export const parseDateToUTC = (dateString: string): Date => {
+  const [day, month, year] = dateString.split('.');
+  return new Date(Date.UTC(parseInt(year), parseInt(month) - 1, parseInt(day)));
+};
