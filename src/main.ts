@@ -9,7 +9,6 @@ async function bootstrap() {
     abortOnError: false,
   });
 
-  // Setting up swagger
   const config = new DocumentBuilder()
     .setTitle('Expenses Manager API')
     .setVersion('1.0')
@@ -18,7 +17,6 @@ async function bootstrap() {
   SwaggerModule.setup('/swagger', app, document);
 
   app.useGlobalPipes(new ValidationPipe());
-  //app.useLogger(app.get(WINSTON_MODULE_PROVIDER));
 
   const port: number | null = +process.env.APP_PORT!;
   await app.listen(port);
