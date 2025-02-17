@@ -3,6 +3,8 @@ import { CreateTransactionCategoryDto } from './dto/create-transaction-category.
 import { LoggerService } from '../logger/logger.service';
 import { TransactionCategoriesRepository } from './transaction-categories.repository';
 import { UpdateTransactionCategoryDto } from './dto/update-transaction-category.dto';
+import { FindManyOptions } from 'typeorm';
+import { TransactionCategory } from './entities/transaction-category.entity';
 
 @Injectable()
 export class TransactionCategoriesService {
@@ -17,7 +19,7 @@ export class TransactionCategoriesService {
     );
   }
 
-  async findAll() {
+  async findAll(options?: FindManyOptions<TransactionCategory>) {
     return await this.transactionCategoriesRepository.findAllGeneric();
   }
 

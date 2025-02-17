@@ -20,6 +20,17 @@ export class TransactionsRepository extends BaseRepository<Transaction> {
     super(Transaction, dataSource);
   }
 
+  async createBulkTransactions(transactions: Transaction[]): Promise<void> {
+    try {
+      await this.dataSource.transaction(async (manager) => {
+        await manager.save(Transaction, transactions);
+      });
+    } catch (error) {
+      processError(error, Transaction.name);
+      throw error;
+    }
+  }
+
   async createTransaction(createTransactionDto: CreateTransactionDto) {
     try {
       const tags: Tag[] = [];

@@ -1,7 +1,7 @@
 import { TransactionCategory } from './entities/transaction-category.entity';
 import { CreateTransactionCategoryDto } from './dto/create-transaction-category.dto';
 import { Injectable } from '@nestjs/common';
-import { DataSource } from 'typeorm';
+import { DataSource, EntityManager } from 'typeorm';
 import { processError } from '../constants';
 import { BaseRepository } from '../BaseRepository';
 import { User } from '../users/entities/user.entity';
@@ -10,6 +10,17 @@ import { User } from '../users/entities/user.entity';
 export class TransactionCategoriesRepository extends BaseRepository<TransactionCategory> {
   constructor(dataSource: DataSource) {
     super(TransactionCategory, dataSource);
+  }
+
+  async createBulkCategories(categories: TransactionCategory[]) {
+    try {
+      await this.dataSource.transaction(async (manager) => {
+        await manager.save(TransactionCategory, categories);
+      });
+    } catch (error) {
+      processError(error, TransactionCategory.name);
+      throw error; // rethrow so that the transaction is rolled back
+    }
   }
 
   async createCategory(

@@ -6,6 +6,8 @@ import { TransactionsRepository } from './transactions.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TagsModule } from '../tags/tags.module';
 import { TransactionCategoriesModule } from '../transaction-categories/transaction-categories.module';
+import { TagsRepository } from '../tags/tags.repository';
+import { TransactionCategoriesRepository } from '../transaction-categories/transaction-categories.repository';
 
 @Module({
   imports: [
@@ -14,7 +16,12 @@ import { TransactionCategoriesModule } from '../transaction-categories/transacti
     TransactionCategoriesModule,
   ],
   controllers: [TransactionsController],
-  providers: [TransactionsService, TransactionsRepository],
+  providers: [
+    TransactionsService,
+    TransactionsRepository,
+    TagsRepository,
+    TransactionCategoriesRepository,
+  ],
   exports: [TransactionsService],
 })
 export class TransactionsModule {}

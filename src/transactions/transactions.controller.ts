@@ -29,6 +29,7 @@ import { User } from '../users/entities/user.entity';
 import { TransactionCategory } from '../transaction-categories/entities/transaction-category.entity';
 import { TransactionRow } from './interfaces/transaction-row';
 import { Tag } from '../tags/entities/tag.entity';
+import { v4 as uuidv4 } from 'uuid';
 
 @ApiTags('Transactions')
 @UseGuards(AuthGuard)
@@ -51,14 +52,18 @@ export class TransactionsController {
 
       if (!transactions) throw new Error('404');
 
-      const newTags: string[] = [];
-      const newCategories: string[] = [];
+      const newTags: Tag[] = [];
+      const newCategories: TransactionCategory[] = [];
       const results: Transaction[] = [];
       const stream = Readable.from(file.buffer);
+      const user = new User();
+      user.id = userId;
       const currentTags = await this.tagsService.findAll({
         where: { user: { id: userId } },
       });
-      const currentCategories = await this.categoryService.findAll();
+      const currentCategories = await this.categoryService.findAll({
+        where: { user: { id: userId } },
+      });
 
       return new Promise((resolve, reject) => {
         stream
@@ -91,8 +96,10 @@ export class TransactionsController {
               } else {
                 const newTag = new Tag();
                 newTag.name = tag;
+                newTag.id = uuidv4();
+                newTag.user = user;
                 transaction.tags.push(newTag);
-                newTags.push(newTag.name);
+                newTags.push(newTag);
               }
             });
 
@@ -105,7 +112,9 @@ export class TransactionsController {
             } else {
               const newCategory = new TransactionCategory();
               newCategory.name = row.category;
-              newCategories.push(row.category);
+              newCategory.id = uuidv4();
+              newCategory.user = user;
+              newCategories.push(newCategory);
               transaction.category = newCategory;
             }
 
@@ -113,16 +122,11 @@ export class TransactionsController {
           })
           .on('end', async () => {
             try {
-              console.log(
-                `-----> newTags detected: ${JSON.stringify(newTags, null, 2)}`,
+              this.transactionsService.importTransactions(
+                newTags,
+                newCategories,
+                results,
               );
-
-              console.log(
-                `-----> newCategories detected: ${JSON.stringify(newCategories, null, 2)}`,
-              );
-              // console.log(
-              //   `-----> results is: ${JSON.stringify(results, null, 2)}`,
-              // );
               resolve(results); // Here you can process or return the parsed CSV data
             } catch (error) {}
           })
