@@ -16,6 +16,12 @@ export namespace Constants {
     Debit = '13163657-8ef1-4d84-9d9d-c098c4095478',
     Credit = 'ddcf99f2-3116-42bf-adf6-b3f7681ac6a6',
   }
+
+  export enum Currencies {
+    EUR = '53da56ba-f65b-40f5-a3ec-062ab2843bc3',
+    USD = '3ed69195-f967-4919-88ac-bd37928a62d9',
+    CZK = '662bfd55-d24e-463d-955b-b9238baa566e',
+  }
 }
 
 export const processError = (error, entityName: string) => {
@@ -26,4 +32,9 @@ export const processError = (error, entityName: string) => {
   } else {
     throw new InternalServerErrorException();
   }
+};
+
+export const parseDateToUTC = (dateString: string): Date => {
+  const [day, month, year] = dateString.split('.');
+  return new Date(Date.UTC(parseInt(year), parseInt(month) - 1, parseInt(day)));
 };

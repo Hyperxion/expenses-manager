@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Column, Entity, OneToMany, Relation } from 'typeorm';
 import { Transaction } from '../../transactions/entities/transaction.entity';
-import { EntityTemplate } from '../../interfaces/EntityTemplate';
+import { EntityTemplate } from '../../interfaces/entityTemplate';
 
 @Entity()
 export class TransactionType extends EntityTemplate {

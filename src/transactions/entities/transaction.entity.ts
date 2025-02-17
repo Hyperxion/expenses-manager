@@ -14,7 +14,7 @@ import { Beneficiary } from '../../beneficiaries/entities/beneficiary.entity';
 import { Currency } from '../../currencies/entities/currency.entity';
 import { Store } from '../../stores/entities/store.entity';
 import { Table } from '../../tables/entities/table.entity';
-import { EntityTemplate } from '../../interfaces/EntityTemplate';
+import { EntityTemplate } from '../../interfaces/entityTemplate';
 import { Tag } from '../../tags/entities/tag.entity';
 
 @Entity()

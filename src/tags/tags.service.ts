@@ -3,6 +3,8 @@ import { CreateTagDto } from './dto/create-tag.dto';
 import { LoggerService } from '../logger/logger.service';
 import { UpdateTagDto } from './dto/update-tag.dto';
 import { TagsRepository } from './tags.repository';
+import { FindManyOptions } from 'typeorm';
+import { Tag } from './entities/tag.entity';
 
 @Injectable()
 export class TagsService {
@@ -15,8 +17,8 @@ export class TagsService {
     return await this.tagsRepository.createTag(createTagDto);
   }
 
-  async findAll() {
-    return await this.tagsRepository.findAllGeneric();
+  async findAll(options?: FindManyOptions<Tag>) {
+    return await this.tagsRepository.findAllGeneric(options);
   }
 
   async findOne(id: string) {

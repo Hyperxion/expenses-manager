@@ -2,7 +2,7 @@ import { PartialType } from '@nestjs/swagger';
 import { CreateTransactionDto } from './create-transaction.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsDate,
+  IsDateString,
   IsNumber,
   IsString,
   IsUUID,
@@ -12,7 +12,7 @@ import {
 
 export class UpdateTransactionDto extends PartialType(CreateTransactionDto) {
   @ApiProperty()
-  @IsDate()
+  @IsDateString()
   date: Date;
 
   @ApiProperty()

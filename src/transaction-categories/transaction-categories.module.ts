@@ -9,5 +9,6 @@ import { TransactionCategoriesRepository } from './transaction-categories.reposi
   imports: [TypeOrmModule.forFeature([TransactionCategory])],
   controllers: [TransactionCategoriesController],
   providers: [TransactionCategoriesService, TransactionCategoriesRepository],
+  exports: [TransactionCategoriesService],
 })
 export class TransactionCategoriesModule {}
