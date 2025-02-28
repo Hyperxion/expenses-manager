@@ -14,5 +14,5 @@ export class Currency extends EntityTemplate {
   abbreviation!: string;
 
   @OneToMany(() => Transaction, (transaction) => transaction.currency)
-  transactions!: Relation<Transaction>[];
+  transactions?: Relation<Transaction>[];
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { LoggerService } from '../logger/logger.service';
 import { CurrenciesRepository } from './currencies.repository';
+import { Currency } from './entities/currency.entity';
 
 @Injectable()
 export class CurrenciesService {
@@ -19,5 +20,9 @@ export class CurrenciesService {
 
   async deleteAll() {
     return await this.currenciesRepository.deleteAll();
+  }
+
+  async create(currency: Currency) {
+    return this.currenciesRepository.create(currency);
   }
 }

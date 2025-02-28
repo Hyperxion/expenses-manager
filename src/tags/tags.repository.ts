@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DataSource, EntityManager, Transaction } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { BaseRepository } from '../BaseRepository';
 import { Tag } from './entities/tag.entity';
 import { CreateTagDto } from './dto/create-tag.dto';

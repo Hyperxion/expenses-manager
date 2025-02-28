@@ -19,20 +19,20 @@ export class User extends EntityTemplate {
   email!: string;
 
   @OneToMany(() => Table, (table) => table.user)
-  tables!: Relation<Table>[];
+  tables?: Relation<Table>[];
 
   @OneToMany(() => Tag, (tag) => tag.user)
-  tags!: Relation<Tag>[];
+  tags?: Relation<Tag>[];
 
   @OneToMany(() => Store, (store) => store.user)
-  stores!: Relation<Store>[];
+  stores?: Relation<Store>[];
 
   @OneToMany(() => Transaction, (transaction) => transaction.user)
-  transactions!: Relation<Transaction>[];
+  transactions?: Relation<Transaction>[];
 
   @OneToMany(() => TransactionCategory, (category) => category.user)
-  transactionCategories!: Relation<TransactionCategory>[];
+  transactionCategories?: Relation<TransactionCategory>[];
 
   @OneToMany(() => Beneficiary, (beneficiary) => beneficiary.user)
-  beneficiaries!: Relation<Beneficiary>[];
+  beneficiaries?: Relation<Beneficiary>[];
 }
