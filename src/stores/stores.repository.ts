@@ -14,7 +14,7 @@ export class StoresRepository extends BaseRepository<Store> {
 
   async createStore(createStoreDto: CreateStoreDto) {
     try {
-      const store = this.create(createStoreDto);
+      const store = await this.create(createStoreDto);
       const user = new User();
       user.id = createStoreDto.userId;
 

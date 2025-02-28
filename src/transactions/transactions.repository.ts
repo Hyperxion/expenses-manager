@@ -121,7 +121,7 @@ export class TransactionsRepository extends BaseRepository<Transaction> {
           `Table with ID ${createTransactionDto.tableId}`,
         );
 
-      const transaction = this.create(createTransactionDto);
+      const transaction = await this.create(createTransactionDto);
 
       transaction.user = user;
       transaction.type = type;

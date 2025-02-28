@@ -10,6 +10,7 @@ import { TransactionCategoriesService } from '../transaction-categories/transact
 import { TransactionsService } from '../transactions/transactions.service';
 import { DataSource, getManager } from 'typeorm';
 import { Currency } from '../currencies/entities/currency.entity';
+import { CreateCurrencyDto } from '../currencies/dto/create-currency.dto';
 
 @Injectable()
 export class SeedService {
@@ -27,22 +28,28 @@ export class SeedService {
   ) {}
 
   async seedDatabase() {
-    if (process.env.ENVIRONMENT === 'dev') {
-      await this.dataSource.synchronize(true); // true drops the db before synchronizing
-      console.log(`-----> Database has been erased.`);
-      await this.loadProdData();
-      await this.loadDevData();
-      console.log(`-----> Development data has been loaded.`);
-    } else {
-      await this.loadProdData();
+    try {
+      if (process.env.ENVIRONMENT === 'dev') {
+        await this.dataSource.synchronize(true); // true drops the db before synchronizing
+        console.log(`-----> Database has been erased.`);
+        await this.loadProdData();
+        await this.loadDevData();
+        console.log(`-----> Development data has been loaded.`);
+      } else {
+        await this.loadProdData();
+      }
+    } catch (error) {
+      console.log(
+        `-----> Error seeding database: ${JSON.stringify(error, null, 2)}`,
+      );
     }
   }
 
   private async loadProdData() {
     try {
-      const currency: Currency = {
-        name: 'Euro',
-        abbreviation: 'EUR',
+      const currency: CreateCurrencyDto = {
+        name: 'Dollar',
+        abbreviation: 'USD',
       };
 
       const result = await this.currenciesService.create(currency);

@@ -27,7 +27,7 @@ export class TransactionCategoriesRepository extends BaseRepository<TransactionC
     createTransactionCategoryDto: CreateTransactionCategoryDto,
   ) {
     try {
-      const store = this.create(createTransactionCategoryDto);
+      const store = await this.create(createTransactionCategoryDto);
       const user = new User();
       user.id = createTransactionCategoryDto.userId;
 

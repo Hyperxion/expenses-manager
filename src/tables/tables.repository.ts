@@ -19,7 +19,7 @@ export class TablesRepository extends BaseRepository<Table> {
 
   async createTable(createTableDto: CreateTableDto) {
     try {
-      const table = this.create(createTableDto);
+      const table = await this.create(createTableDto);
       const user = new User();
       user.id = createTableDto.userId;
 

@@ -25,7 +25,7 @@ export class TagsRepository extends BaseRepository<Tag> {
 
   async createTag(createTagDto: CreateTagDto) {
     try {
-      const tag = this.create(createTagDto);
+      const tag = await this.create(createTagDto);
       const user = new User();
       user.id = createTagDto.userId;
 
