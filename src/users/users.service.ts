@@ -11,20 +11,18 @@ export class UsersService {
   ) {}
 
   async findAll() {
-    const users = await this.usersRepository.getUsers();
-
-    return users;
+    return await this.usersRepository.getUsers();
   }
 
   async findByUsername(username: string) {
-    const users = await this.usersRepository.getByUsername(username);
-
-    return users;
+    return await this.usersRepository.getByUsername(username);
   }
 
   async createUser(registerUserDto: RegisterUserDto) {
-    const newUser = await this.usersRepository.createUser(registerUserDto);
+    return await this.usersRepository.createUser(registerUserDto);
+  }
 
-    return newUser;
+  async deleteAll() {
+    return await this.usersRepository.deleteAll();
   }
 }

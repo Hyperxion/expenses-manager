@@ -16,4 +16,8 @@ export class CurrenciesService {
   async findOne(id: string) {
     return await this.currenciesRepository.findGeneric({ id });
   }
+
+  async deleteAll() {
+    return await this.currenciesRepository.deleteAll();
+  }
 }

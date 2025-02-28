@@ -57,4 +57,8 @@ export class TransactionsService {
   async remove(id: string) {
     return await this.transactionsRepository.removeGeneric(id);
   }
+
+  async deleteAll() {
+    return await this.transactionsRepository.deleteAll();
+  }
 }

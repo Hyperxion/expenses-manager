@@ -40,4 +40,8 @@ export class TransactionCategoriesService {
   async remove(id: string) {
     return await this.transactionCategoriesRepository.removeGeneric(id);
   }
+
+  async deleteAll() {
+    return await this.transactionCategoriesRepository.deleteAll();
+  }
 }

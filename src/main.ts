@@ -3,11 +3,28 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { SeedService } from './seed/seed.service';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     abortOnError: false,
   });
+
+  /**
+   * Now we can run
+   *
+   * `npm run start -- --seed`
+   *
+   * or if there is `package.json` seed script:
+   *
+   * `npm run seed`
+   */
+  if (process.argv.includes('--seed')) {
+    const seeder = app.get(SeedService);
+    await seeder.seedDatabase();
+    await app.close();
+    return;
+  }
 
   const config = new DocumentBuilder()
     .setTitle('Expenses Manager API')

@@ -30,4 +30,8 @@ export class StoresService {
   async remove(id: string) {
     return await this.storesRepository.removeGeneric(id);
   }
+
+  async deleteAll() {
+    return await this.storesRepository.deleteAll();
+  }
 }

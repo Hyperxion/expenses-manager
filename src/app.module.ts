@@ -17,6 +17,8 @@ import { BeneficiariesModule } from './beneficiaries/beneficiaries.module';
 import { TransactionCategoriesModule } from './transaction-categories/transaction-categories.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { UserSettingsModule } from './user-settings/user-settings.module';
+import { SeedService } from './seed/seed.service';
+import { SeedModule } from './seed/seed.module';
 
 @Module({
   imports: [
@@ -41,7 +43,8 @@ import { UserSettingsModule } from './user-settings/user-settings.module';
     TransactionCategoriesModule,
     TransactionsModule,
     UserSettingsModule,
+    SeedModule,
   ],
-  providers: [LoggerService],
+  providers: [LoggerService, SeedService],
 })
 export class AppModule {}

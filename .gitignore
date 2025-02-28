@@ -56,4 +56,7 @@ pids
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # senesitive DB data
-/db/db-data
+/db/db-data.
+*.zip
+*.rar
+*.csv

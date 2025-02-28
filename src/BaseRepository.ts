@@ -83,4 +83,13 @@ export class BaseRepository<T extends ObjectLiteral> extends Repository<T> {
   async findAll() {
     return await this.find();
   }
+
+  /**
+   * Deletes all rows
+   *
+   * @returns - Result of deletion
+   */
+  async deleteAll() {
+    return await this.delete({});
+  }
 }

@@ -40,4 +40,8 @@ export class TablesService {
   async remove(id: string, userId: string) {
     return await this.tablesRepository.removeTable(id, userId);
   }
+
+  async deleteAll() {
+    return await this.tablesRepository.deleteAll();
+  }
 }

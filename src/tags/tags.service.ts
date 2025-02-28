@@ -32,4 +32,8 @@ export class TagsService {
   async remove(id: string) {
     return await this.tagsRepository.removeGeneric(id);
   }
+
+  async deleteAll() {
+    return await this.tagsRepository.deleteAll();
+  }
 }
