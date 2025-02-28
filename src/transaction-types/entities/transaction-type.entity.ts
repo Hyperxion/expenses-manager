@@ -10,5 +10,5 @@ export class TransactionType extends EntityTemplate {
   type!: string;
 
   @OneToMany(() => Transaction, (transaction) => transaction.type)
-  transactions!: Relation<Transaction>[];
+  transactions?: Relation<Transaction>[];
 }

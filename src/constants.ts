@@ -13,10 +13,13 @@ export namespace Constants {
   }
 
   export enum TxTypes {
-    Debit = '13163657-8ef1-4d84-9d9d-c098c4095478',
+    Debet = '13163657-8ef1-4d84-9d9d-c098c4095478',
     Credit = 'ddcf99f2-3116-42bf-adf6-b3f7681ac6a6',
   }
 
+  /**
+   * Used for transaction import when assigning default currency
+   */
   export enum Currencies {
     EUR = '53da56ba-f65b-40f5-a3ec-062ab2843bc3',
     USD = '3ed69195-f967-4919-88ac-bd37928a62d9',
