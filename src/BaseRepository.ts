@@ -30,7 +30,7 @@ export class BaseRepository<T extends ObjectLiteral> extends Repository<T> {
       }
 
       throw new Error('404');
-    } catch (error) {
+    } catch (error: any) {
       processError(error, 'Object');
     }
   }
@@ -44,7 +44,7 @@ export class BaseRepository<T extends ObjectLiteral> extends Repository<T> {
       const updatedEntity = { ...entity, ...updateEntityDto };
 
       return await this.save(updatedEntity);
-    } catch (error) {
+    } catch (error: any) {
       processError(error, 'Object');
     }
   }

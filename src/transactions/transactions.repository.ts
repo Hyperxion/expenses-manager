@@ -25,7 +25,7 @@ export class TransactionsRepository extends BaseRepository<Transaction> {
       await this.dataSource.transaction(async (manager) => {
         await manager.save(Transaction, transactions);
       });
-    } catch (error) {
+    } catch (error: any) {
       processError(error, Transaction.name);
       throw error;
     }
@@ -135,7 +135,7 @@ export class TransactionsRepository extends BaseRepository<Transaction> {
       await this.save(transaction);
 
       return transaction;
-    } catch (error) {
+    } catch (error: any) {
       if (error.status == 404) {
         processError({ message: '404' }, error.message);
       } else {

@@ -42,7 +42,7 @@ export class SeedService {
       await this.currenciesService.deleteAll();
       await this.storesService.deleteAll();
       await this.tablesService.deleteAll();
-    } catch (error) {
+    } catch (error: any) {
       console.log(`-----> error is: ${JSON.stringify(error, null, 2)}`);
     }
   }

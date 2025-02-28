@@ -17,7 +17,7 @@ export class TagsRepository extends BaseRepository<Tag> {
       await this.dataSource.transaction(async (manager) => {
         await manager.save(Tag, tags);
       });
-    } catch (error) {
+    } catch (error: any) {
       processError(error, Tag.name);
       throw error; // rethrow so that the transaction is rolled back
     }
@@ -33,7 +33,7 @@ export class TagsRepository extends BaseRepository<Tag> {
       await this.save(tag);
 
       return tag;
-    } catch (error) {
+    } catch (error: any) {
       processError(error, Tag.name);
     }
   }

@@ -8,11 +8,11 @@ import { Transaction } from '../../transactions/entities/transaction.entity';
 export class Tag extends EntityTemplate {
   @ApiProperty()
   @Column({ unique: true })
-  name: string;
+  name!: string;
 
   @ManyToOne(() => User, (user) => user.tags)
-  user: Relation<User>;
+  user!: Relation<User>;
 
   @ManyToMany(() => Transaction)
-  transactions: Relation<Transaction[]>;
+  transactions!: Relation<Transaction[]>;
 }

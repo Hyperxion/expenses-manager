@@ -128,12 +128,12 @@ export class TransactionsController {
                 results,
               );
               resolve(results); // Here you can process or return the parsed CSV data
-            } catch (error) {}
+            } catch (error: any) {}
           })
-          .on('error', (error) => reject(error));
+          .on('error', (error: any) => reject(error));
       });
       //return 'File has been processed';
-    } catch (error) {
+    } catch (error: any) {
       processError(error, 'File');
     }
   }

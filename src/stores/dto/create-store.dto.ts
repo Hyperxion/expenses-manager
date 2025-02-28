@@ -6,7 +6,7 @@ export class CreateStoreDto {
   @IsString()
   @MinLength(2)
   @MaxLength(50)
-  name: string;
+  name!: string;
 
-  userId: string;
+  userId!: string;
 }

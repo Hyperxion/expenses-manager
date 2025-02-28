@@ -6,9 +6,9 @@ import { EntityTemplate } from '../../interfaces/entityTemplate';
 export class Role extends EntityTemplate {
   @ApiProperty()
   @Column({ unique: true })
-  name: string;
+  name!: string;
 
   @ApiProperty()
   @Column()
-  description: string;
+  description!: string;
 }

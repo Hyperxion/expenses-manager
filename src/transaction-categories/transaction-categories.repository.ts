@@ -17,7 +17,7 @@ export class TransactionCategoriesRepository extends BaseRepository<TransactionC
       await this.dataSource.transaction(async (manager) => {
         await manager.save(TransactionCategory, categories);
       });
-    } catch (error) {
+    } catch (error: any) {
       processError(error, TransactionCategory.name);
       throw error; // rethrow so that the transaction is rolled back
     }
@@ -35,7 +35,7 @@ export class TransactionCategoriesRepository extends BaseRepository<TransactionC
       await this.save(store);
 
       return store;
-    } catch (error) {
+    } catch (error: any) {
       processError(error, TransactionCategory.name);
     }
   }

@@ -7,11 +7,11 @@ export class UpdateTableDto extends PartialType(CreateTableDto) {
   @IsString()
   @MinLength(4)
   @MaxLength(50)
-  name: string;
+  name!: string;
 
   @ApiProperty({ required: false })
   @IsString()
   @MinLength(4)
   @MaxLength(100)
-  description: string;
+  description!: string;
 }

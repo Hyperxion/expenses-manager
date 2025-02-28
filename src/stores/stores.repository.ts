@@ -22,7 +22,7 @@ export class StoresRepository extends BaseRepository<Store> {
       await this.save(store);
 
       return store;
-    } catch (error) {
+    } catch (error: any) {
       processError(error, Store.name);
     }
   }

@@ -55,7 +55,7 @@ export class StoresController {
       await this.storesService.remove(id);
 
       return id;
-    } catch (error) {
+    } catch (error: any) {
       processError(error, 'Store');
     }
   }

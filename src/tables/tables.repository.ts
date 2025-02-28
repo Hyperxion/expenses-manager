@@ -28,7 +28,7 @@ export class TablesRepository extends BaseRepository<Table> {
       await this.save(table);
 
       return table;
-    } catch (error) {
+    } catch (error: any) {
       processError(error, Table.name);
     }
   }

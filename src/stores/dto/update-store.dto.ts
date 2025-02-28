@@ -7,5 +7,5 @@ export class UpdateStoreDto extends PartialType(CreateStoreDto) {
   @IsString()
   @MinLength(4)
   @MaxLength(50)
-  name: string;
+  name!: string;
 }

@@ -11,44 +11,44 @@ import {
 export class CreateTransactionDto {
   @ApiProperty()
   @IsDateString()
-  date: Date;
+  date!: Date;
 
   @ApiProperty()
   @IsNumber()
-  amount: number;
+  amount!: number;
 
   @ApiProperty()
   @IsString()
   @MinLength(2)
   @MaxLength(200)
-  note: string;
+  note!: string;
 
   @ApiProperty()
   @IsUUID()
-  typeId: string;
+  typeId!: string;
 
   @ApiProperty()
   @IsUUID()
-  categoryId: string;
+  categoryId!: string;
 
   @ApiProperty()
   @IsUUID()
-  beneficiaryId: string;
+  beneficiaryId!: string;
 
   @ApiProperty()
   @IsUUID()
-  currencyId: string;
+  currencyId!: string;
 
   @ApiProperty()
   @IsUUID()
-  storeId: string;
+  storeId!: string;
 
   @ApiProperty()
   @IsUUID()
-  tableId: string;
+  tableId!: string;
 
   @ApiProperty({ required: false })
   tagIds?: string[];
 
-  userId: string;
+  userId!: string;
 }

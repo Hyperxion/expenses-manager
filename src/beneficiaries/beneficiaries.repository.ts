@@ -26,7 +26,7 @@ export class BeneficiariesRepository extends BaseRepository<Beneficiary> {
       await this.save(beneficiary);
 
       return beneficiary;
-    } catch (error) {
+    } catch (error: any) {
       processError(error, Beneficiary.name);
     }
   }
