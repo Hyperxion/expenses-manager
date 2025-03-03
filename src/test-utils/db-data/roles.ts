@@ -1,5 +1,5 @@
-import { Constants } from '../../src/constants';
-import { CreateRoleDto } from '../../src/roles/dto/create-role.dto';
+import { Constants } from '../../constants';
+import { CreateRoleDto } from '../../roles/dto/create-role.dto';
 
 export const ROLES: CreateRoleDto[] = [
   {

@@ -8,21 +8,20 @@ import { TablesService } from '../tables/tables.service';
 import { TagsService } from '../tags/tags.service';
 import { TransactionCategoriesService } from '../transaction-categories/transaction-categories.service';
 import { TransactionsService } from '../transactions/transactions.service';
-import { DataSource, getManager } from 'typeorm';
-import { Currency } from '../currencies/entities/currency.entity';
-import { CreateCurrencyDto } from '../currencies/dto/create-currency.dto';
+import { DataSource } from 'typeorm';
+import { CURRENCIES_DATA } from '../test-utils/db-data/currencies';
 
 @Injectable()
 export class SeedService {
   constructor(
-    private dataSource: DataSource,
     private loggerService: LoggerService,
+    private dataSource: DataSource,
+    private currenciesService: CurrenciesService,
     private usersService: UsersService,
     private transactionsService: TransactionsService,
     private tagsService: TagsService,
     private transactionCategoriesService: TransactionCategoriesService,
     private beneficiariesService: BeneficiariesService,
-    private currenciesService: CurrenciesService,
     private storesService: StoresService,
     private tablesService: TablesService,
   ) {}
@@ -32,9 +31,9 @@ export class SeedService {
       if (process.env.ENVIRONMENT === 'dev') {
         await this.dataSource.synchronize(true); // true drops the db before synchronizing
         console.log(`-----> Database has been erased.`);
+
         await this.loadProdData();
-        await this.loadDevData();
-        console.log(`-----> Development data has been loaded.`);
+        // await this.loadDevData();
       } else {
         await this.loadProdData();
       }
@@ -47,19 +46,18 @@ export class SeedService {
 
   private async loadProdData() {
     try {
-      const currency: CreateCurrencyDto = {
-        name: 'Dollar',
-        abbreviation: 'USD',
-      };
-
-      const result = await this.currenciesService.create(currency);
+      const currencies =
+        await this.currenciesService.bulkCreate(CURRENCIES_DATA);
       console.log(
-        `-----> Currency created: ${JSON.stringify(result, null, 2)}`,
+        `-----> currencies inserted into database: ${JSON.stringify(currencies, null, 2)}`,
       );
+      console.log(`-----> Production data has been loaded.`);
     } catch (error) {
       console.log(`-----> error is: ${JSON.stringify(error, null, 2)}`);
     }
   }
 
-  private async loadDevData() {}
+  private async loadDevData() {
+    console.log(`-----> Development data has been loaded.`);
+  }
 }

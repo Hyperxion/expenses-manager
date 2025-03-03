@@ -8,6 +8,8 @@ import {
 } from 'class-validator';
 
 export class RegisterUserDto {
+  id?: string;
+
   @ApiProperty({ required: false })
   @IsString()
   @MinLength(4)

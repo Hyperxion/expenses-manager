@@ -10,22 +10,6 @@ async function bootstrap() {
     abortOnError: false,
   });
 
-  /**
-   * Now we can run
-   *
-   * `npm run start -- --seed`
-   *
-   * or if there is `package.json` seed script:
-   *
-   * `npm run seed`
-   */
-  if (process.argv.includes('--seed')) {
-    const seeder = app.get(SeedService);
-    await seeder.seedDatabase();
-    await app.close();
-    return;
-  }
-
   const config = new DocumentBuilder()
     .setTitle('Expenses Manager API')
     .setVersion('1.0')
@@ -36,6 +20,9 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   const port: number | null = +process.env.APP_PORT!;
+  const seeder = app.get(SeedService);
+  await seeder.seedDatabase();
+
   await app.listen(port);
   console.log(`Application listening on port ${port}`);
 }

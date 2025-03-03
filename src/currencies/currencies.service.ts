@@ -26,4 +26,8 @@ export class CurrenciesService {
     const currency = await this.currenciesRepository.create(currencyDto);
     return await this.currenciesRepository.save(currency);
   }
+
+  async bulkCreate(currenciesDto: CreateCurrencyDto[]) {
+    return await this.currenciesRepository.createBulkCurrencies(currenciesDto);
+  }
 }
