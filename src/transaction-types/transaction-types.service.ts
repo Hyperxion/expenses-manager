@@ -12,4 +12,8 @@ export class TransactionTypesService {
   async findAll() {
     return await this.transacitonTypesRepository.findAllGeneric();
   }
+
+  async bulkCreate(types: { id?: string; type: string }[]) {
+    return await this.transacitonTypesRepository.bulkCreate(types);
+  }
 }

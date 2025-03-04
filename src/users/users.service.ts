@@ -25,4 +25,8 @@ export class UsersService {
   async deleteAll() {
     return await this.usersRepository.deleteAll();
   }
+
+  async bulkCreate(users: RegisterUserDto[]) {
+    return await this.usersRepository.bulkCreate(users);
+  }
 }

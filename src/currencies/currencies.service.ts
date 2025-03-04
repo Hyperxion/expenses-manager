@@ -28,6 +28,6 @@ export class CurrenciesService {
   }
 
   async bulkCreate(currenciesDto: CreateCurrencyDto[]) {
-    return await this.currenciesRepository.createBulkCurrencies(currenciesDto);
+    return await this.currenciesRepository.bulkCreate(currenciesDto);
   }
 }
