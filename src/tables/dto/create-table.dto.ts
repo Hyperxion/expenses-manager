@@ -1,7 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, MinLength, MaxLength } from 'class-validator';
+import { IsString, MinLength, MaxLength, IsUUID } from 'class-validator';
 
 export class CreateTableDto {
+  @IsUUID()
+  id?: string;
+
   @ApiProperty()
   @IsString()
   @MinLength(4)

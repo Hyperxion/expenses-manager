@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, ManyToOne, Relation, Entity, OneToMany } from 'typeorm';
+import {
+  Column,
+  ManyToOne,
+  Relation,
+  Entity,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Transaction } from '../../transactions/entities/transaction.entity';
 import { EntityTemplate } from '../../interfaces/entityTemplate';
@@ -23,4 +30,11 @@ export class Table extends EntityTemplate {
 
   @OneToMany(() => UserRoleTable, (userRoleTable) => userRoleTable.role)
   userRolesTables!: Relation<UserRoleTable[]>;
+
+  @ManyToOne(() => Table, (table) => table.childTables, { nullable: true })
+  @JoinColumn({ name: 'parentTableId' })
+  parentTable!: Table;
+
+  @OneToMany(() => Table, (table) => table.parentTable)
+  childTables!: Table[];
 }
