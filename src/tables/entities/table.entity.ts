@@ -3,6 +3,7 @@ import { Column, ManyToOne, Relation, Entity, OneToMany } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Transaction } from '../../transactions/entities/transaction.entity';
 import { EntityTemplate } from '../../interfaces/entityTemplate';
+import { UserRoleTable } from '../../user-role-table/entities/userRoleTable.entity';
 
 @Entity()
 export class Table extends EntityTemplate {
@@ -19,4 +20,7 @@ export class Table extends EntityTemplate {
 
   @OneToMany(() => Transaction, (transaction) => transaction.table)
   transactions!: Relation<Transaction>[];
+
+  @OneToMany(() => UserRoleTable, (userRoleTable) => userRoleTable.role)
+  userRolesTables!: Relation<UserRoleTable[]>;
 }

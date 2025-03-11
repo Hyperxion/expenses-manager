@@ -6,6 +6,7 @@ import { Column, Entity, OneToMany, Relation } from 'typeorm';
 import { TransactionCategory } from '../../transaction-categories/entities/transaction-category.entity';
 import { Transaction } from '../../transactions/entities/transaction.entity';
 import { EntityTemplate } from '../../interfaces/entityTemplate';
+import { UserRoleTable } from '../../user-role-table/entities/userRoleTable.entity';
 
 @Entity()
 export class User extends EntityTemplate {
@@ -35,4 +36,7 @@ export class User extends EntityTemplate {
 
   @OneToMany(() => Beneficiary, (beneficiary) => beneficiary.user)
   beneficiaries?: Relation<Beneficiary>[];
+
+  @OneToMany(() => UserRoleTable, (userRoleTable) => userRoleTable.user)
+  userRolesTables?: Relation<UserRoleTable[]>;
 }

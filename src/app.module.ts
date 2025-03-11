@@ -19,6 +19,7 @@ import { TransactionsModule } from './transactions/transactions.module';
 import { UserSettingsModule } from './user-settings/user-settings.module';
 import { SeedService } from './seed/seed.service';
 import { SeedModule } from './seed/seed.module';
+import { UserRoleTableModule } from './user-role-table/user-role-table.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { SeedModule } from './seed/seed.module';
     TransactionsModule,
     UserSettingsModule,
     SeedModule,
+    UserRoleTableModule,
   ],
   providers: [LoggerService, SeedService],
 })
