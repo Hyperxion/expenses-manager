@@ -14,6 +14,7 @@ import { ROLES } from '../test-utils/db-data/roles';
 import { USERS } from '../test-utils/db-data/users';
 import { TransactionTypesService } from '../transaction-types/transaction-types.service';
 import { TXTYPES } from '../test-utils/db-data/txTypes';
+import { TABLES } from '../test-utils/db-data/tables';
 
 @Injectable()
 export class SeedService {
@@ -24,11 +25,11 @@ export class SeedService {
     private rolesService: RolesService,
     private usersService: UsersService,
     private transactionTypesService: TransactionTypesService,
+    private tablesService: TablesService,
     private transactionsService: TransactionsService,
     private tagsService: TagsService,
     private beneficiariesService: BeneficiariesService,
     private storesService: StoresService,
-    private tablesService: TablesService,
   ) {}
 
   async seedDatabase() {
@@ -55,6 +56,7 @@ export class SeedService {
       await this.insertRoles();
       await this.insertUsers();
       await this.insertTxTypes();
+      await this.insertTables();
 
       console.log(`-----> Production data has been loaded.`);
     } catch (error) {
@@ -93,4 +95,13 @@ export class SeedService {
       `-----> Transaction types inserted into databas: ${JSON.stringify(types, null, 2)}`,
     );
   }
+
+  private async insertTables() {
+    const tables = await this.tablesService.bulkCreate(TABLES);
+    console.log(
+      `-----> Tables inserted into databas: ${JSON.stringify(tables, null, 2)}`,
+    );
+  }
+
+  private async insertRoleAssignemtns() {}
 }

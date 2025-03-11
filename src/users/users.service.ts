@@ -18,6 +18,10 @@ export class UsersService {
     return await this.usersRepository.getByUsername(username);
   }
 
+  async findByUserId(userId: string) {
+    return await this.usersRepository.getById(userId);
+  }
+
   async createUser(registerUserDto: RegisterUserDto) {
     return await this.usersRepository.createUser(registerUserDto);
   }
@@ -29,4 +33,6 @@ export class UsersService {
   async bulkCreate(users: RegisterUserDto[]) {
     return await this.usersRepository.bulkCreate(users);
   }
+
+  async assignRole() {}
 }

@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  NotFoundException,
 } from '@nestjs/common';
 import { TablesService } from './tables.service';
 import { UpdateTableDto } from './dto/update-table.dto';
@@ -14,20 +15,32 @@ import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '../auth/auth.guard';
 import { GetUserId } from '../auth/getUserId.decorator';
 import { CreateTableDto } from './dto/create-table.dto';
+import { UsersService } from '../users/users.service';
 
 @ApiTags('tables')
 @UseGuards(AuthGuard)
 @Controller('tables')
 export class TablesController {
-  constructor(private readonly tablesService: TablesService) {}
+  constructor(
+    private tablesService: TablesService,
+    private usersService: UsersService,
+  ) {}
 
   @Post()
   async create(
     @Body() createTableDto: CreateTableDto,
     @GetUserId() userId: string,
   ) {
-    createTableDto.userId = userId;
-    return await this.tablesService.create(createTableDto);
+    try {
+      const user = await this.usersService.findByUserId(userId);
+
+      if (!user) {
+        throw new NotFoundException(`User not found`);
+      }
+
+      createTableDto.userId = user.id!;
+      return await this.tablesService.create(createTableDto);
+    } catch (error) {}
   }
 
   @Get()

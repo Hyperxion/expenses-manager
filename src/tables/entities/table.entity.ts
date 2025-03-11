@@ -19,8 +19,8 @@ export class Table extends EntityTemplate {
   user!: Relation<User>;
 
   @OneToMany(() => Transaction, (transaction) => transaction.table)
-  transactions!: Relation<Transaction>[];
+  transactions?: Relation<Transaction>[];
 
   @OneToMany(() => UserRoleTable, (userRoleTable) => userRoleTable.role)
-  userRolesTables!: Relation<UserRoleTable[]>;
+  userRolesTables?: Relation<UserRoleTable[]>;
 }
