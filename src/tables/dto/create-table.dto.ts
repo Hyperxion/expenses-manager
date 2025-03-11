@@ -14,5 +14,5 @@ export class CreateTableDto {
   @MaxLength(100)
   description!: string;
 
-  userId!: string;
+  user!: { id: string };
 }

@@ -44,4 +44,8 @@ export class TablesService {
   async deleteAll() {
     return await this.tablesRepository.deleteAll();
   }
+
+  async bulkCreate(tables: CreateTableDto[]) {
+    return await this.tablesRepository.bulkCreate(tables as any);
+  }
 }
