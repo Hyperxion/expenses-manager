@@ -21,6 +21,10 @@ export class TablesService {
     return await this.tablesRepository.getUserTables(userId);
   }
 
+  async createTableWithParent(tableDto: CreateTableDto) {
+    return await this.tablesRepository.createTable(tableDto);
+  }
+
   async findAll() {
     return await this.tablesRepository.findAllGeneric();
   }

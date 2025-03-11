@@ -26,7 +26,7 @@ export class TablesController {
     @Body() createTableDto: CreateTableDto,
     @GetUserId() userId: string,
   ) {
-    createTableDto.userId = userId;
+    createTableDto.user = { id: userId };
     return await this.tablesService.create(createTableDto);
   }
 

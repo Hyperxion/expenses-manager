@@ -33,8 +33,8 @@ export class Table extends EntityTemplate {
 
   @ManyToOne(() => Table, (table) => table.childTables, { nullable: true })
   @JoinColumn({ name: 'parentTableId' })
-  parentTable!: Table;
+  parentTable?: Table;
 
   @OneToMany(() => Table, (table) => table.parentTable)
-  childTables!: Table[];
+  childTables?: Table[];
 }
