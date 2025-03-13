@@ -7,8 +7,8 @@ import { EntityTemplate } from '../../interfaces/entityTemplate';
 export class TransactionType extends EntityTemplate {
   @ApiProperty()
   @Column({ unique: true })
-  type: string;
+  type!: string;
 
   @OneToMany(() => Transaction, (transaction) => transaction.type)
-  transactions: Relation<Transaction>[];
+  transactions?: Relation<Transaction>[];
 }

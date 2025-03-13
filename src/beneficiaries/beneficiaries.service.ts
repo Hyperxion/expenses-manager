@@ -35,4 +35,8 @@ export class BeneficiariesService {
   async remove(id: string) {
     return await this.beneficiariesRepository.removeGeneric(id);
   }
+
+  async deleteAll() {
+    return await this.beneficiariesRepository.deleteAll();
+  }
 }

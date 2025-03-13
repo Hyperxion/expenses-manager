@@ -21,6 +21,10 @@ export class TablesService {
     return await this.tablesRepository.getUserTables(userId);
   }
 
+  async createTableWithParent(tableDto: CreateTableDto) {
+    return await this.tablesRepository.createTable(tableDto);
+  }
+
   async findAll() {
     return await this.tablesRepository.findAllGeneric();
   }
@@ -39,5 +43,13 @@ export class TablesService {
 
   async remove(id: string, userId: string) {
     return await this.tablesRepository.removeTable(id, userId);
+  }
+
+  async deleteAll() {
+    return await this.tablesRepository.deleteAll();
+  }
+
+  async bulkCreate(tables: CreateTableDto[]) {
+    return await this.tablesRepository.bulkCreate(tables as any);
   }
 }

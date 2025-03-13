@@ -9,5 +9,5 @@ export class UpdateTransactionCategoryDto extends PartialType(
   @IsString()
   @MinLength(4)
   @MaxLength(50)
-  name: string;
+  name!: string;
 }

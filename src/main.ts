@@ -3,6 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { SeedService } from './seed/seed.service';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -19,6 +20,9 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   const port: number | null = +process.env.APP_PORT!;
+  const seeder = app.get(SeedService);
+  await seeder.seedDatabase();
+
   await app.listen(port);
   console.log(`Application listening on port ${port}`);
 }

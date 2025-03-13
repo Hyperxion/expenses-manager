@@ -20,10 +20,10 @@ export class UsersController {
   async getAll(@GetUserId() userId: string) {
     try {
       return this.usersService.findAll();
-    } catch (error) {
+    } catch (error: any) {
       this.logger.error(
         'Error occured',
-        error,
+        error as string,
         `${UsersController.name}.getAll()`,
         userId,
       );
@@ -37,10 +37,10 @@ export class UsersController {
   async getUserTables(@Param('userId') userId: string) {
     try {
       return this.tablesService.getUserTables(userId);
-    } catch (error) {
+    } catch (error: any) {
       this.logger.error(
         'Error occured',
-        error,
+        error as string,
         `${UsersController.name}.getAll()`,
         userId,
       );

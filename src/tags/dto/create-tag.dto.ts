@@ -6,7 +6,7 @@ export class CreateTagDto {
   @IsString()
   @MinLength(4)
   @MaxLength(50)
-  name: string;
+  name!: string;
 
-  userId: string;
+  userId!: string;
 }

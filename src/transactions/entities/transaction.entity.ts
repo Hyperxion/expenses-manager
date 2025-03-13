@@ -21,44 +21,44 @@ import { Tag } from '../../tags/entities/tag.entity';
 export class Transaction extends EntityTemplate {
   @ApiProperty()
   @Column()
-  date: Date;
+  date!: Date;
 
   @ApiProperty()
   @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
-  amount: Number;
+  amount!: Number;
 
   @ManyToMany(() => Tag, { cascade: true })
   @JoinTable()
-  tags: Relation<Tag[]>;
+  tags!: Relation<Tag[]>;
 
   @ApiProperty()
   @Column()
-  note: string;
+  note!: string;
 
   @ManyToOne(() => User, (user) => user.transactions)
-  user: Relation<User>;
+  user!: Relation<User>;
 
   @ApiProperty()
   @ManyToOne(() => TransactionType, (transactionType) => transactionType.id)
-  type: Relation<TransactionType>;
+  type!: Relation<TransactionType>;
 
   @ApiProperty()
   @ManyToOne(() => TransactionCategory, (category) => category.transactions)
-  category: Relation<TransactionCategory>;
+  category!: Relation<TransactionCategory>;
 
   @ApiProperty()
   @ManyToOne(() => Beneficiary, (beneficiary) => beneficiary.transactions)
-  beneficiary: Relation<Beneficiary>;
+  beneficiary!: Relation<Beneficiary>;
 
   @ApiProperty()
   @ManyToOne(() => Currency, (currency) => currency.transactions)
-  currency: Relation<Currency>;
+  currency!: Relation<Currency>;
 
   @ApiProperty()
   @ManyToOne(() => Store, (store) => store.transactions)
-  store: Relation<Store>;
+  store!: Relation<Store>;
 
   @ApiProperty()
   @ManyToOne(() => Table, (table) => table.transactions)
-  table: Relation<Table>;
+  table!: Relation<Table>;
 }

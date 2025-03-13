@@ -19,22 +19,30 @@ export class TablesRepository extends BaseRepository<Table> {
 
   async createTable(createTableDto: CreateTableDto) {
     try {
-      const table = this.create(createTableDto);
-      const user = new User();
-      user.id = createTableDto.userId;
+      const { name, description, parentTableId, user } = createTableDto;
 
-      table.user = user;
+      const parentTable = parentTableId
+        ? await this.findOne({ where: { id: parentTableId } })
+        : null;
+
+      const table = new Table();
+      table.name = name;
+      table.description = description;
+      table.user = { id: user.id } as User;
+      table.parentTable = parentTable ? parentTable : undefined;
 
       await this.save(table);
-
       return table;
-    } catch (error) {
+    } catch (error: any) {
       processError(error, Table.name);
     }
   }
 
   async getUserTables(userId: string) {
-    return await this.find({ where: { user: { id: userId } } });
+    return await this.find({
+      where: { user: { id: userId } },
+      relations: ['childTables', 'parentTable'],
+    });
   }
 
   /**

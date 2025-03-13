@@ -30,7 +30,7 @@ export class BaseRepository<T extends ObjectLiteral> extends Repository<T> {
       }
 
       throw new Error('404');
-    } catch (error) {
+    } catch (error: any) {
       processError(error, 'Object');
     }
   }
@@ -44,7 +44,7 @@ export class BaseRepository<T extends ObjectLiteral> extends Repository<T> {
       const updatedEntity = { ...entity, ...updateEntityDto };
 
       return await this.save(updatedEntity);
-    } catch (error) {
+    } catch (error: any) {
       processError(error, 'Object');
     }
   }
@@ -82,5 +82,33 @@ export class BaseRepository<T extends ObjectLiteral> extends Repository<T> {
    */
   async findAll() {
     return await this.find();
+  }
+
+  /**
+   * Deletes all rows
+   *
+   * @returns - Result of deletion
+   */
+  async deleteAll() {
+    return await this.delete({});
+  }
+
+  /**
+   * Bulk insert for any entity type.
+   * @param entities Array of entities to insert.
+   * @returns Promise<void>
+   */
+  async bulkCreate(entities: T[]): Promise<T[]> {
+    try {
+      // Execute bulk insert directly
+      await this.dataSource.transaction(async (manager) => {
+        await manager.save(this.entityTarget, entities); // Insert all entities at once
+      });
+
+      return entities;
+    } catch (error) {
+      console.error('Error during bulk creation:', error);
+      throw error;
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DataSource, EntityManager, Transaction } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { BaseRepository } from '../BaseRepository';
 import { Tag } from './entities/tag.entity';
 import { CreateTagDto } from './dto/create-tag.dto';
@@ -17,7 +17,7 @@ export class TagsRepository extends BaseRepository<Tag> {
       await this.dataSource.transaction(async (manager) => {
         await manager.save(Tag, tags);
       });
-    } catch (error) {
+    } catch (error: any) {
       processError(error, Tag.name);
       throw error; // rethrow so that the transaction is rolled back
     }
@@ -25,7 +25,7 @@ export class TagsRepository extends BaseRepository<Tag> {
 
   async createTag(createTagDto: CreateTagDto) {
     try {
-      const tag = this.create(createTagDto);
+      const tag = await this.create(createTagDto);
       const user = new User();
       user.id = createTagDto.userId;
 
@@ -33,7 +33,7 @@ export class TagsRepository extends BaseRepository<Tag> {
       await this.save(tag);
 
       return tag;
-    } catch (error) {
+    } catch (error: any) {
       processError(error, Tag.name);
     }
   }

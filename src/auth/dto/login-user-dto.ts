@@ -10,10 +10,10 @@ import {
 export class LoginUserDto {
   @ApiProperty({ required: true })
   @IsString()
-  username: string;
+  username!: string;
 
   @ApiProperty()
   @ApiProperty({ required: true })
   @IsString()
-  password: string;
+  password!: string;
 }

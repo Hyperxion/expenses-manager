@@ -17,6 +17,9 @@ import { BeneficiariesModule } from './beneficiaries/beneficiaries.module';
 import { TransactionCategoriesModule } from './transaction-categories/transaction-categories.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { UserSettingsModule } from './user-settings/user-settings.module';
+import { SeedService } from './seed/seed.service';
+import { SeedModule } from './seed/seed.module';
+import { UserRoleTableModule } from './user-role-table/userRoleTable.module';
 
 @Module({
   imports: [
@@ -41,7 +44,9 @@ import { UserSettingsModule } from './user-settings/user-settings.module';
     TransactionCategoriesModule,
     TransactionsModule,
     UserSettingsModule,
+    SeedModule,
+    UserRoleTableModule,
   ],
-  providers: [LoggerService],
+  providers: [LoggerService, SeedService],
 })
 export class AppModule {}

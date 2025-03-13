@@ -14,7 +14,7 @@ export class StoresRepository extends BaseRepository<Store> {
 
   async createStore(createStoreDto: CreateStoreDto) {
     try {
-      const store = this.create(createStoreDto);
+      const store = await this.create(createStoreDto);
       const user = new User();
       user.id = createStoreDto.userId;
 
@@ -22,7 +22,7 @@ export class StoresRepository extends BaseRepository<Store> {
       await this.save(store);
 
       return store;
-    } catch (error) {
+    } catch (error: any) {
       processError(error, Store.name);
     }
   }

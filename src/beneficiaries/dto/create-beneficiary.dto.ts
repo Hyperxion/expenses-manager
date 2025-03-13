@@ -6,7 +6,7 @@ export class CreateBeneficiaryDto {
   @IsString()
   @MinLength(2)
   @MaxLength(50)
-  name: string;
+  name!: string;
 
   @ApiProperty({ required: false })
   @IsString()
@@ -14,5 +14,5 @@ export class CreateBeneficiaryDto {
   @MaxLength(100)
   accountNumber?: string;
 
-  userId: string;
+  userId!: string;
 }

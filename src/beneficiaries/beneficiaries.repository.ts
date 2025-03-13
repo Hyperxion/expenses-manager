@@ -18,7 +18,7 @@ export class BeneficiariesRepository extends BaseRepository<Beneficiary> {
 
   async createBeneficiary(createBeneficiaryDto: CreateBeneficiaryDto) {
     try {
-      const beneficiary = this.create(createBeneficiaryDto);
+      const beneficiary = await this.create(createBeneficiaryDto);
       const user = new User();
       user.id = createBeneficiaryDto.userId;
 
@@ -26,7 +26,7 @@ export class BeneficiariesRepository extends BaseRepository<Beneficiary> {
       await this.save(beneficiary);
 
       return beneficiary;
-    } catch (error) {
+    } catch (error: any) {
       processError(error, Beneficiary.name);
     }
   }

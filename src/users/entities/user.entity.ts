@@ -6,33 +6,37 @@ import { Column, Entity, OneToMany, Relation } from 'typeorm';
 import { TransactionCategory } from '../../transaction-categories/entities/transaction-category.entity';
 import { Transaction } from '../../transactions/entities/transaction.entity';
 import { EntityTemplate } from '../../interfaces/entityTemplate';
+import { UserRoleTable } from '../../user-role-table/entities/userRoleTable.entity';
 
 @Entity()
 export class User extends EntityTemplate {
   @Column({ unique: true })
-  username: string;
+  username!: string;
 
   @Column()
-  password: string;
+  password!: string;
 
   @Column({ nullable: true })
-  email: string;
+  email!: string;
 
   @OneToMany(() => Table, (table) => table.user)
-  tables: Relation<Table>[];
+  tables?: Relation<Table>[];
 
   @OneToMany(() => Tag, (tag) => tag.user)
-  tags: Relation<Tag>[];
+  tags?: Relation<Tag>[];
 
   @OneToMany(() => Store, (store) => store.user)
-  stores: Relation<Store>[];
+  stores?: Relation<Store>[];
 
   @OneToMany(() => Transaction, (transaction) => transaction.user)
-  transactions: Relation<Transaction>[];
+  transactions?: Relation<Transaction>[];
 
   @OneToMany(() => TransactionCategory, (category) => category.user)
-  transactionCategories: Relation<TransactionCategory>[];
+  transactionCategories?: Relation<TransactionCategory>[];
 
   @OneToMany(() => Beneficiary, (beneficiary) => beneficiary.user)
-  beneficiaries: Relation<Beneficiary>[];
+  beneficiaries?: Relation<Beneficiary>[];
+
+  @OneToMany(() => UserRoleTable, (userRoleTable) => userRoleTable.user)
+  userRolesTables?: Relation<UserRoleTable[]>;
 }

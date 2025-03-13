@@ -2,14 +2,22 @@
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "paths": {
+      "*": ["node_modules/*"]
+    },
+    "noEmit": true, // Prevents emission of files during compilation
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2021",
+    "target": "es6",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,

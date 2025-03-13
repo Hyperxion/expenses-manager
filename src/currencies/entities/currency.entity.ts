@@ -7,12 +7,12 @@ import { EntityTemplate } from '../../interfaces/entityTemplate';
 export class Currency extends EntityTemplate {
   @ApiProperty()
   @Column({ unique: true })
-  name: string;
+  name!: string;
 
   @ApiProperty()
   @Column({ unique: true })
-  abbreviation: string;
+  abbreviation!: string;
 
   @OneToMany(() => Transaction, (transaction) => transaction.currency)
-  transactions: Relation<Transaction>[];
+  transactions?: Relation<Transaction>[];
 }

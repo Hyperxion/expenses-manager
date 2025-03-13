@@ -32,6 +32,13 @@ export class TransactionsService {
     // use transaction to bulk create new tags using tags repository
     // use transaction to bulk create new transaction Categories using transactionCategories Repository
     // use transaction to bulk create new transactions TransactionsRepository tags repository
+    console.log(`-----> new tags to save: ${JSON.stringify(newTags, null, 2)}`);
+    console.log(
+      `-----> newCategories to save: ${JSON.stringify(newCategories, null, 2)}`,
+    );
+    console.log(
+      `-----> transactions is: ${JSON.stringify(transactions, null, 2)}`,
+    );
     await this.tagsRepository.createBulkTags(newTags);
     await this.transactionCategoriesRepository.createBulkCategories(
       newCategories,
@@ -56,5 +63,9 @@ export class TransactionsService {
 
   async remove(id: string) {
     return await this.transactionsRepository.removeGeneric(id);
+  }
+
+  async deleteAll() {
+    return await this.transactionsRepository.deleteAll();
   }
 }

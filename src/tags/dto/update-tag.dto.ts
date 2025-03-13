@@ -7,5 +7,5 @@ export class UpdateTagDto extends PartialType(CreateTagDto) {
   @IsString()
   @MinLength(4)
   @MaxLength(50)
-  name: string;
+  name!: string;
 }
