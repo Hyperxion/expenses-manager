@@ -8,13 +8,13 @@ import { Table } from '../../tables/entities/table.entity';
 export class UserRoleTable extends EntityTemplate {
   @ManyToOne(() => User, (user) => user.userRolesTables)
   @JoinColumn({ name: 'userId' })
-  user!: Relation<User>;
+  user!: Relation<User | { id: string }>;
 
   @ManyToOne(() => Role, (role) => role.userRolesTables)
   @JoinColumn({ name: 'roleId' })
-  role!: Relation<Role>;
+  role!: Relation<Role | { id: string }>;
 
   @ManyToOne(() => Table, (table) => table.userRolesTables)
   @JoinColumn({ name: 'tableId' })
-  table!: Relation<Table>;
+  table!: Relation<Table | { id: string }>;
 }

@@ -11,10 +11,17 @@ import { DataSource } from 'typeorm';
 import { CURRENCIES_DATA } from '../test-utils/db-data/currencies';
 import { RolesService } from '../roles/roles.service';
 import { ROLES } from '../test-utils/db-data/roles';
-import { USERS } from '../test-utils/db-data/users';
+import { USERS, USERS_DEV } from '../test-utils/db-data/users';
 import { TransactionTypesService } from '../transaction-types/transaction-types.service';
 import { TXTYPES } from '../test-utils/db-data/txTypes';
-import { TABLES } from '../test-utils/db-data/tables';
+import { TABLES, TABLES_DEV } from '../test-utils/db-data/tables';
+import { CreateTableDto } from '../tables/dto/create-table.dto';
+import { UserRoleTableDto } from '../user-role-table/dto/userRoleTable.dto';
+import {
+  USER_ROLES_TABLES,
+  USER_ROLES_TABLES_DEV,
+} from '../test-utils/db-data/userRoleTable';
+import { RegisterUserDto } from '../auth/dto/registerUser.dto';
 
 @Injectable()
 export class SeedService {
@@ -25,11 +32,11 @@ export class SeedService {
     private rolesService: RolesService,
     private usersService: UsersService,
     private transactionTypesService: TransactionTypesService,
+    private tablesService: TablesService,
     private transactionsService: TransactionsService,
     private tagsService: TagsService,
     private beneficiariesService: BeneficiariesService,
     private storesService: StoresService,
-    private tablesService: TablesService,
   ) {}
 
   async seedDatabase() {
@@ -39,7 +46,7 @@ export class SeedService {
         console.log(`-----> Database has been erased.`);
 
         await this.loadProdData();
-        // await this.loadDevData();
+        await this.loadDevData();
       } else {
         await this.loadProdData();
       }
@@ -54,9 +61,10 @@ export class SeedService {
     try {
       await this.insertCurrencies();
       await this.insertRoles();
-      await this.insertUsers();
       await this.insertTxTypes();
-      await this.insertTables();
+      await this.insertUsers(USERS);
+      await this.insertTables(TABLES);
+      await this.insertUsersRolesTables(USER_ROLES_TABLES);
 
       console.log(`-----> Production data has been loaded.`);
     } catch (error) {
@@ -65,7 +73,15 @@ export class SeedService {
   }
 
   private async loadDevData() {
-    console.log(`-----> Development data has been loaded.`);
+    try {
+      await this.insertUsers(USERS_DEV);
+      await this.insertTables(TABLES_DEV);
+      await this.insertUsersRolesTables(USER_ROLES_TABLES_DEV);
+
+      console.log(`-----> Development data has been loaded.`);
+    } catch (error) {
+      console.log(`-----> error is: ${JSON.stringify(error, null, 2)}`);
+    }
   }
 
   private async insertCurrencies() {
@@ -82,10 +98,10 @@ export class SeedService {
     );
   }
 
-  private async insertUsers() {
-    const users = await this.usersService.bulkCreate(USERS);
+  private async insertUsers(users: RegisterUserDto[]) {
+    const newUsers = await this.usersService.bulkCreate(users);
     console.log(
-      `-----> Users inserted into databas: ${JSON.stringify(users, null, 2)}`,
+      `-----> Users inserted into databas: ${JSON.stringify(newUsers, null, 2)}`,
     );
   }
 
@@ -96,10 +112,18 @@ export class SeedService {
     );
   }
 
-  private async insertTables() {
-    const tables = await this.tablesService.bulkCreate(TABLES);
+  private async insertTables(tables: CreateTableDto[]) {
+    const newTables = await this.tablesService.bulkCreate(tables);
     console.log(
-      `-----> Tables inserted into databas: ${JSON.stringify(tables, null, 2)}`,
+      `-----> Tables inserted into databas: ${JSON.stringify(newTables, null, 2)}`,
+    );
+  }
+
+  private async insertUsersRolesTables(userRoleTables: UserRoleTableDto[]) {
+    const assignments =
+      await this.rolesService.assignUsersRolesTables(userRoleTables);
+    console.log(
+      `-----> Users and Roles has been assigned to the tables: ${JSON.stringify(assignments, null, 2)}`,
     );
   }
 }

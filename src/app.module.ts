@@ -19,7 +19,7 @@ import { TransactionsModule } from './transactions/transactions.module';
 import { UserSettingsModule } from './user-settings/user-settings.module';
 import { SeedService } from './seed/seed.service';
 import { SeedModule } from './seed/seed.module';
-import { UserRoleTableModule } from './user-role-table/user-role-table.module';
+import { UserRoleTableModule } from './user-role-table/userRoleTable.module';
 
 @Module({
   imports: [

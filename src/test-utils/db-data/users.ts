@@ -8,6 +8,9 @@ export const USERS: RegisterUserDto[] = [
     password: '$2b$10$L3BrkiGWeUJ2e1xZTpO5J.yOdoWDEbzPGWLd5vtgYJipnHaqRX8wu',
     username: 'mrcrow',
   },
+];
+
+export const USERS_DEV: RegisterUserDto[] = [
   {
     id: 'f66e4999-4045-4137-86dd-acf134f9f7b2',
     email: 'johny@email.com',

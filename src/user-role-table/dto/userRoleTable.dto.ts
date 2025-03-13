@@ -1,5 +1,5 @@
 export class UserRoleTableDto {
-  userId!: string;
-  roleId!: string;
-  tableId!: string;
+  user!: { id: string };
+  role!: { id: string };
+  table!: { id: string };
 }
