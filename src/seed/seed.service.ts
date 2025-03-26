@@ -22,6 +22,8 @@ import {
   USER_ROLES_TABLES_DEV,
 } from '../test-utils/db-data/userRoleTable';
 import { RegisterUserDto } from '../auth/dto/registerUser.dto';
+import { loadCsvFile } from '../utils/csvImporter';
+import { CSV_TEST_FILES } from '../test-utils/db-data/csv/csvFiles';
 
 @Injectable()
 export class SeedService {
@@ -77,6 +79,7 @@ export class SeedService {
       await this.insertUsers(USERS_DEV);
       await this.insertTables(TABLES_DEV);
       await this.insertUsersRolesTables(USER_ROLES_TABLES_DEV);
+      await this.importCsvTestData();
 
       console.log(`-----> Development data has been loaded.`);
     } catch (error) {
@@ -125,5 +128,16 @@ export class SeedService {
     console.log(
       `-----> Users and Roles has been assigned to the tables: ${JSON.stringify(assignments, null, 2)}`,
     );
+  }
+
+  private async importCsvTestData() {
+    try {
+      const fileContent = loadCsvFile(CSV_TEST_FILES[0]);
+      // console.log(
+      //   `-----> fileContent is: ${JSON.stringify(fileContent, null, 2)}`,
+      // );
+    } catch (error) {
+      console.log(`-----> error is: ${JSON.stringify(error, null, 2)}`);
+    }
   }
 }

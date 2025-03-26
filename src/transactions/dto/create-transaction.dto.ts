@@ -21,7 +21,7 @@ export class CreateTransactionDto {
   @IsString()
   @MinLength(2)
   @MaxLength(200)
-  note!: string;
+  note?: string;
 
   @ApiProperty()
   @IsUUID()
@@ -33,7 +33,7 @@ export class CreateTransactionDto {
 
   @ApiProperty()
   @IsUUID()
-  beneficiaryId!: string;
+  beneficiaryId?: string;
 
   @ApiProperty()
   @IsUUID()
@@ -41,7 +41,7 @@ export class CreateTransactionDto {
 
   @ApiProperty()
   @IsUUID()
-  storeId!: string;
+  storeId?: string;
 
   @ApiProperty()
   @IsUUID()

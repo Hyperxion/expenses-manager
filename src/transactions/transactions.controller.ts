@@ -21,13 +21,11 @@ import { Readable } from 'stream';
 import csv from 'csv-parser';
 import { Constants, parseDateToUTC, processError } from '../constants';
 import { Transaction } from './entities/transaction.entity';
-import { TagsRepository } from '../tags/tags.repository';
 import { TagsService } from '../tags/tags.service';
 import { TransactionCategoriesService } from '../transaction-categories/transaction-categories.service';
 import { Currency } from '../currencies/entities/currency.entity';
 import { User } from '../users/entities/user.entity';
 import { TransactionCategory } from '../transaction-categories/entities/transaction-category.entity';
-import { TransactionRow } from './interfaces/transaction-row';
 import { Tag } from '../tags/entities/tag.entity';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -99,7 +97,6 @@ export class TransactionsController {
           .pipe(csv())
           .on('data', async (row: any) => {
             const transaction = new Transaction();
-            console.log(`-----> row is: ${JSON.stringify(row, null, 2)}`);
             const tags = row.tags.split(',');
             const date = parseDateToUTC(row.date);
 
