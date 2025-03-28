@@ -37,6 +37,10 @@ export class TransactionCategoriesService {
     );
   }
 
+  async bulkCreate(categories: TransactionCategory[]) {
+    return await this.transactionCategoriesRepository.bulkCreate(categories);
+  }
+
   async remove(id: string) {
     return await this.transactionCategoriesRepository.removeGeneric(id);
   }

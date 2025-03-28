@@ -14,5 +14,5 @@ export class TransactionCategory extends EntityTemplate {
   user!: Relation<User>;
 
   @OneToMany(() => Transaction, (transaction) => transaction.category)
-  transactions!: Relation<Transaction>[];
+  transactions?: Relation<Transaction>[];
 }
