@@ -16,40 +16,38 @@ export async function loadCsvFile(
   fileName: string,
   folder: string = 'src/test-utils/db-data/csv/',
 ): Promise<CsvTransaction[]> {
-  return new Promise((resolve, reject) => {
-    const filePath = path.join(process.cwd(), folder, fileName);
-    const transactions: CsvTransaction[] = [];
+  const filePath = path.join(process.cwd(), folder, fileName);
+  const transactions: CsvTransaction[] = [];
 
-    console.log(`-----> Reading file from path: ${filePath}`);
+  console.log(`-----> Reading file from path: ${filePath}`);
 
-    if (!fs.existsSync(filePath)) {
-      console.log(`File not found: ${filePath}`);
-      return reject(new Error(`File ${filePath} not found!`)); // Reject promise if file is not found
-    }
+  // Check if the file exists
+  if (!fs.existsSync(filePath)) {
+    console.log(`File not found: ${filePath}`);
+    throw new Error(`File ${filePath} not found!`);
+  }
 
-    fs.createReadStream(filePath)
-      .pipe(csv())
-      .on('data', (row) => {
-        const transaction: CsvTransaction = {
-          date: row._0,
-          ammount: row._1.replace(/[^\d,.-]/g, '').replace(',', '.'),
-          type: row._2,
-          category: row._3,
-          tags: row._4,
-          note: row._5,
-        };
+  // Use a stream to read the file
+  const stream = fs.createReadStream(filePath).pipe(csv());
 
-        transactions.push(transaction);
-      })
-      .on('end', () => {
-        console.log('-----> CSV file processing completed.');
-        resolve(transactions); // Resolve the promise once the file is processed
-      })
-      .on('error', (error) => {
-        console.error('Error reading file:', error);
-        reject(error); // Reject promise if there's an error while reading the file
-      });
-  });
+  for await (const row of stream) {
+    const transaction: CsvTransaction = {
+      date: row._0,
+      ammount: row._1.replace(/[^\d,.-]/g, '').replace(',', '.'),
+      type: row._2,
+      category: row._3,
+      tags: row._4,
+      note: row._5,
+    };
+
+    transactions.push(transaction);
+  }
+
+  console.log('-----> CSV file processing completed.');
+  console.log(
+    `-----> ${transactions.length} transactions processed from file ${fileName}`,
+  );
+  return transactions;
 }
 
 /**
