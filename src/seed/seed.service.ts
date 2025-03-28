@@ -22,10 +22,15 @@ import {
   USER_ROLES_TABLES_DEV,
 } from '../test-utils/db-data/userRoleTable';
 import { RegisterUserDto } from '../auth/dto/registerUser.dto';
-import { loadCsvFile, processCsvCategories } from '../utils/csvImporter';
+import {
+  loadCsvFile,
+  processCsvCategories,
+  processCsvTags,
+} from '../utils/csvImporter';
 import { CSV_TEST_FILES } from '../test-utils/db-data/csv/csvFiles';
 import { TransactionCategoriesService } from '../transaction-categories/transaction-categories.service';
 import { TransactionCategory } from '../transaction-categories/entities/transaction-category.entity';
+import { Tag } from '../tags/entities/tag.entity';
 
 @Injectable()
 export class SeedService {
@@ -38,8 +43,8 @@ export class SeedService {
     private transactionTypesService: TransactionTypesService,
     private tablesService: TablesService,
     private transactionCategoriesService: TransactionCategoriesService,
-    private transactionsService: TransactionsService,
     private tagsService: TagsService,
+    private transactionsService: TransactionsService,
     private beneficiariesService: BeneficiariesService,
     private storesService: StoresService,
   ) {}
@@ -138,6 +143,7 @@ export class SeedService {
       const csvTransactions = await loadCsvFile(CSV_TEST_FILES[0]);
       const user = await this.usersService.findById(USERS[0].id!);
       let newCategories: TransactionCategory[] = [];
+      let newTags: Tag[] = [];
 
       if (!csvTransactions) {
         throw Error('Test CSV File is missing!');
@@ -150,6 +156,12 @@ export class SeedService {
       newCategories = await processCsvCategories(
         csvTransactions,
         this.transactionCategoriesService,
+        USERS[0].id!,
+      );
+
+      newTags = await processCsvTags(
+        csvTransactions,
+        this.tagsService,
         USERS[0].id!,
       );
     } catch (error) {

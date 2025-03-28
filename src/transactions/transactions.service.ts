@@ -33,9 +33,7 @@ export class TransactionsService {
     // use transaction to bulk create new transaction Categories using transactionCategories Repository
     // use transaction to bulk create new transactions TransactionsRepository tags repository
     await this.tagsRepository.createBulkTags(newTags);
-    await this.transactionCategoriesRepository.createBulkCategories(
-      newCategories,
-    );
+    await this.transactionCategoriesRepository.bulkCreate(newCategories);
     await this.transactionsRepository.createBulkTransactions(transactions);
   }
 
