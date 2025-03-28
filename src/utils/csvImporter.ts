@@ -5,6 +5,8 @@ import { CsvTransaction } from './csvTransaction';
 import { TransactionCategoriesService } from '../transaction-categories/transaction-categories.service';
 import { TransactionCategory } from '../transaction-categories/entities/transaction-category.entity';
 import { User } from '../users/entities/user.entity';
+import { TagsService } from '../tags/tags.service';
+import { Tag } from '../tags/entities/tag.entity';
 
 /**
  * Loads csv file based on it's file name and path. Default path is `src/test-utils/db-data/csv/`
@@ -96,4 +98,40 @@ export async function processCsvCategories(
   return categoriesToBeCreated;
 }
 
-export async function processCsvTags() {}
+export async function processCsvTags(
+  csvTransactions: CsvTransaction[],
+  tagsService: TagsService,
+  userId: string,
+) {
+  // Step 1: Load all tags from the DB at once to minimize DB calls
+  const existingTags = await tagsService.findAll();
+  const existingTagNames = new Set(existingTags.map((tag) => tag.name));
+
+  // Step 2: Extract unique tags from CSV transactions
+  const uniqueCsvTags = new Set(
+    csvTransactions
+      .map((transaction) => transaction.tags.split(',')) // Split tags by commas
+      .flat() // Flatten the resulting array of arrays
+      .map((tag) => tag.trim()), // Optional: remove any extra whitespace
+  );
+
+  const tagsToBeCreated: Tag[] = [];
+
+  uniqueCsvTags.forEach((tagName) => {
+    if (!existingTagNames.has(tagName)) {
+      const tag = new Tag();
+      const user = new User();
+
+      user.id = userId;
+      tag.name = tagName;
+      tag.user = user;
+
+      tagsToBeCreated.push(tag);
+    }
+  });
+
+  console.log(`-----> Importing ${tagsToBeCreated.length} tags.`);
+  await tagsService.bulkCreate(tagsToBeCreated);
+
+  return tagsToBeCreated;
+}
