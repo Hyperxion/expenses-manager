@@ -15,9 +15,8 @@ import { User } from '../users/entities/user.entity';
 export async function loadCsvFile(
   fileName: string,
   folder: string = 'src/test-utils/db-data/csv/',
-): Promise<CsvTransaction[] | undefined> {
-  try {
-    // Construct path relative to the root of the project
+): Promise<CsvTransaction[]> {
+  return new Promise((resolve, reject) => {
     const filePath = path.join(process.cwd(), folder, fileName);
     const transactions: CsvTransaction[] = [];
 
@@ -25,8 +24,7 @@ export async function loadCsvFile(
 
     if (!fs.existsSync(filePath)) {
       console.log(`File not found: ${filePath}`);
-
-      throw Error(`File ${filePath} not found!`);
+      return reject(new Error(`File ${filePath} not found!`)); // Reject promise if file is not found
     }
 
     fs.createReadStream(filePath)
@@ -45,18 +43,13 @@ export async function loadCsvFile(
       })
       .on('end', () => {
         console.log('-----> CSV file processing completed.');
-        console.log(
-          `-----> ${transactions.length} transactions processed from file ${fileName}`,
-        );
+        resolve(transactions); // Resolve the promise once the file is processed
       })
       .on('error', (error) => {
         console.error('Error reading file:', error);
+        reject(error); // Reject promise if there's an error while reading the file
       });
-
-    return transactions;
-  } catch (error) {
-    console.log(`-----> error is: ${JSON.stringify(error, null, 2)}`);
-  }
+  });
 }
 
 /**
@@ -94,14 +87,15 @@ export async function processCsvCategories(
       category.name = categoryName;
       category.user = user;
 
-      console.log(`-----> category is: ${JSON.stringify(category, null, 2)}`);
       categoriesToBeCreated.push(category);
     }
   });
 
   console.log(`-----> Importing ${categoriesToBeCreated.length} categories.`);
-  transactionCategoriesService.bulkCreate(categoriesToBeCreated);
+  await transactionCategoriesService.bulkCreate(categoriesToBeCreated);
 
   // Return the list of new categories that need to be created
   return categoriesToBeCreated;
 }
+
+export async function processCsvTags() {}
