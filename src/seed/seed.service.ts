@@ -136,8 +136,7 @@ export class SeedService {
   private async importCsvTestData() {
     try {
       const csvTransactions = await loadCsvFile(CSV_TEST_FILES[0]);
-      const user = this.usersService.findById(USERS[0].id!);
-
+      const user = await this.usersService.findById(USERS[0].id!);
       let newCategories: TransactionCategory[] = [];
 
       if (!csvTransactions) {
