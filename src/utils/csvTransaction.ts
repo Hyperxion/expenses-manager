@@ -1,8 +1,8 @@
 export type CsvTransaction = {
-  date: string;
+  date: Date;
   ammount: number;
   type: string;
-  category: string;
+  categoryName: string;
   tags: string;
   note: string;
 };

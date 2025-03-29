@@ -23,6 +23,7 @@ import {
 } from '../test-utils/db-data/userRoleTable';
 import { RegisterUserDto } from '../auth/dto/registerUser.dto';
 import {
+  createTransactionsFromCsvFile,
   loadCsvFile,
   processCsvCategories,
   processCsvTags,
@@ -31,6 +32,7 @@ import { CSV_TEST_FILES } from '../test-utils/db-data/csv/csvFiles';
 import { TransactionCategoriesService } from '../transaction-categories/transaction-categories.service';
 import { TransactionCategory } from '../transaction-categories/entities/transaction-category.entity';
 import { Tag } from '../tags/entities/tag.entity';
+import { Transaction } from '../transactions/entities/transaction.entity';
 
 @Injectable()
 export class SeedService {
@@ -142,8 +144,10 @@ export class SeedService {
     try {
       const csvTransactions = await loadCsvFile(CSV_TEST_FILES[0]);
       const user = await this.usersService.findById(USERS[0].id!);
+
       let newCategories: TransactionCategory[] = [];
       let newTags: Tag[] = [];
+      let transactions: Transaction[] = [];
 
       if (!csvTransactions) {
         throw Error('Test CSV File is missing!');
@@ -163,6 +167,22 @@ export class SeedService {
         csvTransactions,
         this.tagsService,
         USERS[0].id!,
+      );
+
+      const tagsFromDB = await this.tagsService.findAll();
+      const transactionCategoriesFromDB =
+        await this.transactionCategoriesService.findAll();
+
+      transactions = await createTransactionsFromCsvFile(
+        csvTransactions,
+        this.transactionsService,
+        tagsFromDB,
+        transactionCategoriesFromDB,
+        USERS[0].id!,
+      );
+
+      console.log(
+        `-----> transactions is: ${JSON.stringify(transactions, null, 2)}`,
       );
     } catch (error) {
       console.log(`-----> error is: ${JSON.stringify(error, null, 2)}`);

@@ -7,6 +7,10 @@ import { TransactionCategory } from '../transaction-categories/entities/transact
 import { User } from '../users/entities/user.entity';
 import { TagsService } from '../tags/tags.service';
 import { Tag } from '../tags/entities/tag.entity';
+import { TransactionsService } from '../transactions/transactions.service';
+import { Transaction } from '../transactions/entities/transaction.entity';
+import { Constants, parseDateToUTC } from '../constants';
+import { Currency } from '../currencies/entities/currency.entity';
 
 /**
  * Loads csv file based on it's file name and path. Default path is `src/test-utils/db-data/csv/`
@@ -34,10 +38,10 @@ export async function loadCsvFile(
 
   for await (const row of stream) {
     const transaction: CsvTransaction = {
-      date: row._0,
+      date: parseDateToUTC(row._0),
       ammount: row._1.replace(/[^\d,.-]/g, '').replace(',', '.'),
       type: row._2,
-      category: row._3,
+      categoryName: row._3,
       tags: row._4,
       note: row._5,
     };
@@ -56,7 +60,7 @@ export async function loadCsvFile(
  * Processes simple csv transactions - extracts names of categories and compares it with
  * existing categories in database. Then it inserts new categories into database
  *
- * Returns list of category names that does not exist in database yet
+ * Returns list of categories just created in database
  */
 export async function processCsvCategories(
   csvTransactions: CsvTransaction[],
@@ -72,7 +76,7 @@ export async function processCsvCategories(
 
   // Step 2: Extract unique categories from CSV transactions
   const uniqueCsvCategories = new Set(
-    csvTransactions.map((transaction) => transaction.category),
+    csvTransactions.map((transaction) => transaction.categoryName),
   );
 
   // Step 3: Compare and find categories that are in the CSV but not in the DB
@@ -135,3 +139,62 @@ export async function processCsvTags(
 
   return tagsToBeCreated;
 }
+
+export async function createTransactionsFromCsvFile(
+  csvTransactions: CsvTransaction[],
+  transactionsService: TransactionsService,
+  tagsFromDB: Tag[],
+  transactionCategoriesFromDB: TransactionCategory[],
+  userId: string,
+  currencyId: string = Constants.Currencies.EUR,
+) {
+  const transactions: Transaction[] = [];
+
+  for (const csvTransaction of csvTransactions) {
+    const transaction = new Transaction();
+    let tags = csvTransaction.tags.split(',');
+
+    transaction.amount = csvTransaction.ammount;
+    transaction.date = csvTransaction.date;
+    transaction.note = csvTransaction.note;
+    transaction.tags = [];
+    transaction.currency = new Currency();
+    // TODO: Will be dynamically loaded from userSettings.preferredCurrency
+    transaction.currency.id = currencyId;
+    transaction.user = new User();
+    transaction.user.id = userId;
+
+    const matchingCategory = transactionCategoriesFromDB.find(
+      (category) => category.name === csvTransaction.categoryName,
+    );
+
+    if (!matchingCategory) {
+      throw Error(
+        `Error during csv import - category ${csvTransaction.categoryName} does not exists in database!`,
+      );
+    }
+
+    transaction.category = matchingCategory;
+
+    // Step 1: Loop over tags from the CSV and find matching tags in DB
+    tags.forEach((tagName) => {
+      // Trim any extra whitespace around tags
+      tagName = tagName.trim();
+
+      // Step 2: Find the tag in the tagsFromDB array
+      const matchingTag = tagsFromDB.find((tag) => tag.name === tagName);
+
+      // Step 3: If the tag exists, push it to the transaction's tags array
+      if (matchingTag) {
+        transaction.tags.push(matchingTag);
+      }
+    });
+
+    transactions.push(transaction);
+  }
+
+  return await transactionsService.bulkCreate(transactions);
+}
+
+// TODO process tags - map tags from DB to tags in csvTransaction based on name
+// TODO process categories - map categories from DB to categories in csvTransaction based on name

@@ -24,6 +24,10 @@ export class TransactionsService {
     );
   }
 
+  async bulkCreate(transactions: Transaction[]) {
+    return await this.transactionsRepository.bulkCreate(transactions);
+  }
+
   async importTransactions(
     newTags: Tag[],
     newCategories: TransactionCategory[],
