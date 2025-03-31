@@ -1,5 +1,6 @@
 # Application variables
 APP_PORT=3000
+ENVIRONMENT=dev
 ENABLE_AUTH=true
 
 # Database variables
