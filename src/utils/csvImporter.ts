@@ -34,7 +34,12 @@ export async function loadCsvFile(
   }
 
   // Use a stream to read the file
-  const stream = fs.createReadStream(filePath).pipe(csv());
+  const stream = fs.createReadStream(filePath).pipe(
+    csv({
+      headers: true, // Don't treat the first row as headers
+      quote: '"', // Handle quoted strings correctly
+    }),
+  );
 
   for await (const row of stream) {
     const transaction: CsvTransaction = {

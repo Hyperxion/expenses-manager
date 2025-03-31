@@ -140,10 +140,6 @@ export class SeedService {
       const csvTransactions = await loadCsvFile(CSV_TEST_FILES[0]);
       const user = await this.usersService.findById(USERS[0].id!);
 
-      let allCategories: TransactionCategory[] = [];
-      let allTags: Tag[] = [];
-      let transactions: Transaction[] = [];
-
       if (!csvTransactions) {
         throw Error('Test CSV File is missing!');
       }
@@ -152,7 +148,7 @@ export class SeedService {
         throw Error('User not found!');
       }
 
-      importCsvTransactions(
+      await importCsvTransactions(
         csvTransactions,
         this.tagsService,
         this.transactionCategoriesService,
