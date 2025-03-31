@@ -57,10 +57,14 @@ export async function loadCsvFile(
 }
 
 /**
- * Processes simple csv transactions - extracts names of categories and compares it with
- * existing categories in database. Then it inserts new categories into database
+ * Processes all transaction categories from csv transactions and determines which are new and need to be inserted
+ * into database.
  *
- * Returns list of categories just created in database
+ * @param csvTransactions contains simple transaction from csv file
+ * @param transactionCategoriesService is used to create new categories
+ * @param userId is set to determine tag ownership
+ *
+ * @returns list of all categories including newly created.
  */
 export async function processCsvCategories(
   csvTransactions: CsvTransaction[],
@@ -99,9 +103,19 @@ export async function processCsvCategories(
   await transactionCategoriesService.bulkCreate(categoriesToBeCreated);
 
   // Return the list of new categories that need to be created
-  return categoriesToBeCreated;
+  return categoriesToBeCreated.concat(existingCategories);
 }
 
+/**
+ * Processes all tags from csv transactions and determines which are new and need to be inserted
+ * into database.
+ *
+ * @param csvTransactions contains simple transaction from csv file
+ * @param tagsService is used to create new tags
+ * @param userId is set to determine tag ownership
+ *
+ * @returns list of all tags including newly created.
+ */
 export async function processCsvTags(
   csvTransactions: CsvTransaction[],
   tagsService: TagsService,
@@ -119,7 +133,7 @@ export async function processCsvTags(
       .map((tag) => tag.trim()), // Optional: remove any extra whitespace
   );
 
-  const tagsToBeCreated: Tag[] = [];
+  let tagsToBeCreated: Tag[] = [];
 
   uniqueCsvTags.forEach((tagName) => {
     if (!existingTagNames.has(tagName)) {
@@ -135,18 +149,30 @@ export async function processCsvTags(
   });
 
   console.log(`-----> Importing ${tagsToBeCreated.length} tags.`);
-  await tagsService.bulkCreate(tagsToBeCreated);
+  tagsToBeCreated = await tagsService.bulkCreate(tagsToBeCreated);
 
-  return tagsToBeCreated;
+  return tagsToBeCreated.concat(existingTags);
 }
 
+/**
+ * When importing from CSV file, first a tags and categories must be processed using @processCsvTags
+ * and @processCsvCategories which can be called in arbitrary order. After that we have new tags and categories
+ * from CSV file in database and therefore we can proceed with transactions insertion.
+ *
+ * @param csvTransactions - array of simple CSV transaction objects
+ * @param transactionsService - service required to insert transactions
+ * @param allTags - all tags from DB including tags created in @processCsvTags
+ * @param transactionCategoriesFromDB -all transaction categories from DB including new ones created in @processCsvCategories
+ * @param userId - owner of transactions to be inserted
+ * @param currencyId - should be user's preffered currency from table userSettings.preferredCurrency
+ */
 export async function createTransactionsFromCsvFile(
   csvTransactions: CsvTransaction[],
   transactionsService: TransactionsService,
-  tagsFromDB: Tag[],
+  allTags: Tag[],
   transactionCategoriesFromDB: TransactionCategory[],
   userId: string,
-  currencyId: string = Constants.Currencies.EUR,
+  currencyId: string,
 ) {
   const transactions: Transaction[] = [];
 
@@ -182,7 +208,13 @@ export async function createTransactionsFromCsvFile(
       tagName = tagName.trim();
 
       // Step 2: Find the tag in the tagsFromDB array
-      const matchingTag = tagsFromDB.find((tag) => tag.name === tagName);
+      const matchingTag = allTags.find((tag) => tag.name === tagName);
+
+      if (!matchingTag) {
+        throw Error(
+          `Error during csv import - tag ${tagName} does not exists in database!`,
+        );
+      }
 
       // Step 3: If the tag exists, push it to the transaction's tags array
       if (matchingTag) {
@@ -196,5 +228,35 @@ export async function createTransactionsFromCsvFile(
   return await transactionsService.bulkCreate(transactions);
 }
 
-// TODO process tags - map tags from DB to tags in csvTransaction based on name
-// TODO process categories - map categories from DB to categories in csvTransaction based on name
+/**
+ * Wrapper function for @processCsvCategories @processCsvTags and @createTransactionsFromCsvFile methods
+ */
+export async function importCsvTransactions(
+  csvTransactions: CsvTransaction[],
+  tagsService: TagsService,
+  transactionCategoriesService: TransactionCategoriesService,
+  transactionsService: TransactionsService,
+  userId: string,
+  currencyId: string = Constants.Currencies.EUR,
+) {
+  let allCategories: TransactionCategory[] = [];
+  let allTags: Tag[] = [];
+  let transactions: Transaction[] = [];
+
+  allCategories = await processCsvCategories(
+    csvTransactions,
+    transactionCategoriesService,
+    userId,
+  );
+
+  allTags = await processCsvTags(csvTransactions, tagsService, userId);
+
+  transactions = await createTransactionsFromCsvFile(
+    csvTransactions,
+    transactionsService,
+    allTags,
+    allCategories,
+    userId,
+    currencyId,
+  );
+}
