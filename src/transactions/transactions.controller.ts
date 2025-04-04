@@ -43,6 +43,7 @@ export class TransactionsController {
     @GetUserId() userId: string,
   ): Promise<any> {
     try {
+      // GetUserId() decorator not working
       const uploadedFile = file?.buffer.toString();
 
       if (!uploadedFile) throw new Error('404');
