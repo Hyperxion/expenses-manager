@@ -25,9 +25,6 @@ import { RegisterUserDto } from '../auth/dto/registerUser.dto';
 import { importCsvTransactions, loadCsvFile } from '../utils/csvImporter';
 import { CSV_TEST_FILES } from '../test-utils/db-data/csv/csvFiles';
 import { TransactionCategoriesService } from '../transaction-categories/transaction-categories.service';
-import { TransactionCategory } from '../transaction-categories/entities/transaction-category.entity';
-import { Tag } from '../tags/entities/tag.entity';
-import { Transaction } from '../transactions/entities/transaction.entity';
 
 @Injectable()
 export class SeedService {
