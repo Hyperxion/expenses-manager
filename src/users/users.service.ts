@@ -14,6 +14,14 @@ export class UsersService {
     return await this.usersRepository.getUsers();
   }
 
+  async findById(id: string) {
+    return await this.usersRepository.findOne({
+      where: {
+        id,
+      },
+    });
+  }
+
   async findByUsername(username: string) {
     return await this.usersRepository.getByUsername(username);
   }

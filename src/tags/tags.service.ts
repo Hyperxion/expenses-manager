@@ -17,6 +17,10 @@ export class TagsService {
     return await this.tagsRepository.createTag(createTagDto);
   }
 
+  async bulkCreate(tags: Tag[]) {
+    return this.tagsRepository.bulkCreate(tags);
+  }
+
   async findAll(options?: FindManyOptions<Tag>) {
     return await this.tagsRepository.findAllGeneric(options);
   }

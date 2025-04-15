@@ -24,6 +24,10 @@ export class TransactionsService {
     );
   }
 
+  async bulkCreate(transactions: Transaction[]) {
+    return await this.transactionsRepository.bulkCreate(transactions);
+  }
+
   async importTransactions(
     newTags: Tag[],
     newCategories: TransactionCategory[],
@@ -32,17 +36,8 @@ export class TransactionsService {
     // use transaction to bulk create new tags using tags repository
     // use transaction to bulk create new transaction Categories using transactionCategories Repository
     // use transaction to bulk create new transactions TransactionsRepository tags repository
-    console.log(`-----> new tags to save: ${JSON.stringify(newTags, null, 2)}`);
-    console.log(
-      `-----> newCategories to save: ${JSON.stringify(newCategories, null, 2)}`,
-    );
-    console.log(
-      `-----> transactions is: ${JSON.stringify(transactions, null, 2)}`,
-    );
     await this.tagsRepository.createBulkTags(newTags);
-    await this.transactionCategoriesRepository.createBulkCategories(
-      newCategories,
-    );
+    await this.transactionCategoriesRepository.bulkCreate(newCategories);
     await this.transactionsRepository.createBulkTransactions(transactions);
   }
 

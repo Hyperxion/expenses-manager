@@ -12,17 +12,6 @@ export class TransactionCategoriesRepository extends BaseRepository<TransactionC
     super(TransactionCategory, dataSource);
   }
 
-  async createBulkCategories(categories: TransactionCategory[]) {
-    try {
-      await this.dataSource.transaction(async (manager) => {
-        await manager.save(TransactionCategory, categories);
-      });
-    } catch (error: any) {
-      processError(error, TransactionCategory.name);
-      throw error; // rethrow so that the transaction is rolled back
-    }
-  }
-
   async createCategory(
     createTransactionCategoryDto: CreateTransactionCategoryDto,
   ) {
