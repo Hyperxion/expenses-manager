@@ -10,3 +10,10 @@ DB_USERNAME=postgres
 DB_PASSWORD=postgres
 DB_DATABASE=expense-manager
 JWT_SECRET=B[T@_6_-M2ux\^u),<7D9hsu99x.2-}bX_2bUXgnW?#5YT*cn$d{HjvBW^#Jfs]j
+
+# Parameters for MariaDB instance
+MARIA_DB_HOST=localhost
+MARIA_DB_PORT=3306
+MARIA_DB_USERNAME=root
+MARIA_DB_PASSWORD=root123
+MARIA_DB_NAME=expense-manager
