@@ -1,12 +1,20 @@
-# Application variables
+# Application settings
 APP_PORT=3000
 ENVIRONMENT=dev
 ENABLE_AUTH=true
 
-# Database variables
+# Database settings
+DB_TYPE=mysql # or mysql or postgres
+DB_NAME=expense-manager
+
 DB_HOST=localhost
 DB_PORT=5432
 DB_USERNAME=postgres
 DB_PASSWORD=postgres
-DB_DATABASE=expense-manager
 JWT_SECRET=B[T@_6_-M2ux\^u),<7D9hsu99x.2-}bX_2bUXgnW?#5YT*cn$d{HjvBW^#Jfs]j
+
+# Parameters for MariaDB instance
+MARIA_DB_HOST=erikpi
+MARIA_DB_PORT=3306
+MARIA_DB_USERNAME=edemko
+MARIA_DB_PASSWORD=edemko
