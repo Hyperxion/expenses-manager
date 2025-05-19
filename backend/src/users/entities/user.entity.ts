@@ -5,7 +5,7 @@ import { Tag } from '../../tags/entities/tag.entity';
 import { Column, Entity, OneToMany, Relation } from 'typeorm';
 import { TransactionCategory } from '../../transaction-categories/entities/transaction-category.entity';
 import { Transaction } from '../../transactions/entities/transaction.entity';
-import { EntityTemplate } from '../../interfaces/entityTemplate';
+import { EntityTemplate } from '../../interfaces/EntityTemplate';
 import { UserRoleTable } from '../../user-role-table/entities/userRoleTable.entity';
 
 @Entity()

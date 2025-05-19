@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Transaction } from '../../transactions/entities/transaction.entity';
-import { EntityTemplate } from '../../interfaces/entityTemplate';
+import { EntityTemplate } from '../../interfaces/EntityTemplate';
 import { UserRoleTable } from '../../user-role-table/entities/userRoleTable.entity';
 
 @Entity()

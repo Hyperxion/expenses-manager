@@ -1,5 +1,5 @@
 import { Entity, JoinColumn, ManyToOne, Relation } from 'typeorm';
-import { EntityTemplate } from '../../interfaces/entityTemplate';
+import { EntityTemplate } from '../../interfaces/EntityTemplate';
 import { Role } from '../../roles/entities/role.entity';
 import { User } from '../../users/entities/user.entity';
 import { Table } from '../../tables/entities/table.entity';
